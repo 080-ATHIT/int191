@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INT191: Relational Database Concepts & Design - Complete Study Hub & 70 Quiz</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root[data-theme="light"] {
+            --bg-main: #f8fafc;
+            --bg-card: #ffffff;
+            --bg-muted: #f1f5f9;
+            --text-main: #0f172a;
+            --text-muted: #475569;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --accent-soft: #dbeafe;
+            --border: #e2e8f0;
+            --success: #16a34a;
+            --success-bg: #dcfce7;
+            --danger: #dc2626;
+            --danger-bg: #fee2e2;
+            --warning: #d97706;
+            --warning-bg: #fef3c7;
+            --code-bg: #1e293b;
+            --code-text: #f8fafc;
+            --shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        }
+
+        :root[data-theme="dark"] {
+            --bg-main: #0b1120;
+            --bg-card: #1e293b;
+            --bg-muted: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
+            --accent: #38bdf8;
+            --accent-hover: #7dd3fc;
+            --accent-soft: rgba(56, 189, 248, 0.15);
+            --border: #334155;
+            --success: #4ade80;
+            --success-bg: rgba(74, 222, 128, 0.15);
+            --danger: #f87171;
+            --danger-bg: rgba(248, 113, 113, 0.15);
+            --warning: #fbbf24;
+            --warning-bg: rgba(251, 191, 36, 0.14);
+            --code-bg: #090d16;
+            --code-text: #e2e8f0;
+            --shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.65;
+            transition: background-color 0.25s, color 0.25s;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 0.8rem 1.5rem;
+        }
+
+        .nav-bar {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .btn.active, .btn:hover {
+            background-color: var(--accent);
+            color: #0b1120;
+            border-color: var(--accent);
+        }
+
+        :root[data-theme="light"] .btn.active,
+        :root[data-theme="light"] .btn:hover {
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 1.8rem auto;
+            padding: 0 1.2rem;
+        }
+
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+
+        .study-layout {
+            display: grid;
+            grid-template-columns: 270px 1fr;
+            gap: 1.8rem;
+            align-items: start;
+        }
+
+        @media (max-width: 920px) {
+            .study-layout { grid-template-columns: 1fr; }
+            .toc-box { position: static !important; }
+        }
+
+        .toc-box {
+            position: sticky;
+            top: 82px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .toc-box h3 {
+            font-size: 0.95rem;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+        }
+
+        .toc-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .toc-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.4rem 0.65rem;
+            border-radius: 6px;
+            display: block;
+            transition: all 0.15s;
+        }
+
+        .toc-links a:hover {
+            background: var(--accent-soft);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.6rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+            scroll-margin-top: 85px;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0.7rem;
+            margin-bottom: 1.1rem;
+        }
+
+        .tag {
+            background: var(--accent);
+            color: #0b1120;
+            font-weight: 700;
+            font-size: 0.78rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+        }
+
+        :root[data-theme="light"] .tag { color: #ffffff; }
+
+        h2 { font-size: 1.35rem; }
+        h3 { font-size: 1.12rem; color: var(--accent); margin: 1.1rem 0 0.5rem; }
+        p, ul, ol { margin-bottom: 0.75rem; }
+        ul, ol { padding-left: 1.4rem; }
+        li { margin-bottom: 0.35rem; }
+
+        .lecture-note {
+            background: var(--warning-bg);
+            border-left: 4px solid var(--warning);
+            padding: 0.9rem 1.1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 0.9rem 0;
+        }
+
+        .lecture-note strong { color: var(--warning); display: block; margin-bottom: 0.2rem; }
+
+        .table-wrap { overflow-x: auto; margin: 0.9rem 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        th, td { border: 1px solid var(--border); padding: 0.6rem 0.8rem; text-align: left; }
+        th { background: var(--bg-muted); font-weight: 700; }
+
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 0.95rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.86rem;
+            margin: 0.75rem 0;
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-muted);
+            padding: 0.1rem 0.35rem;
+            border-radius: 4px;
+            font-size: 0.88em;
+        }
+
+        pre code { background: transparent; padding: 0; }
+
+        /* Quiz Styling */
+        .quiz-toolbar {
+            position: sticky;
+            top: 68px;
+            z-index: 900;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.1rem 1.4rem;
+            margin-bottom: 1.4rem;
+            box-shadow: var(--shadow);
+        }
+
+        .quiz-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .score-badge {
+            background: var(--accent-soft);
+            color: var(--accent);
+            padding: 0.4rem 0.95rem;
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .cat-filters {
+            display: flex;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+            margin-top: 0.8rem;
+        }
+
+        .cat-btn {
+            background: var(--bg-muted);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.3rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.83rem;
+            font-weight: 600;
+        }
+
+        .cat-btn.active {
+            background: var(--accent);
+            color: #0b1120;
+            border-color: var(--accent);
+        }
+
+        :root[data-theme="light"] .cat-btn.active { color: #ffffff; }
+
+        .q-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.4rem;
+            margin-bottom: 1.1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .q-head {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.84rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .q-text {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.9rem;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .choice-btn {
+            text-align: left;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 0.7rem 0.95rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.93rem;
+            transition: all 0.15s;
+        }
+
+        .choice-btn:hover:not(:disabled) {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        .choice-btn.correct {
+            background: var(--success-bg);
+            border-color: var(--success);
+            color: var(--success);
+            font-weight: 700;
+        }
+
+        .choice-btn.wrong {
+            background: var(--danger-bg);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .explain {
+            display: none;
+            margin-top: 0.85rem;
+            padding: 0.85rem 1rem;
+            border-radius: 8px;
+            background: var(--bg-muted);
+            border-left: 4px solid var(--accent);
+            font-size: 0.9rem;
+        }
+
+        .explain.visible { display: block; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="nav-bar">
+        <div class="logo">🗄️ INT191 Relational DB Concepts & Design</div>
+        <div class="nav-buttons">
+            <button class="btn active" onclick="openTab('study', this)">📖 สรุปเนื้อหาเข้มข้น (Week 1–10)</button>
+            <button class="btn" onclick="openTab('quiz', this)">🎯 เก็งข้อสอบ 70 ข้อ (5 ตัวเลือก)</button>
+            <button class="btn" onclick="toggleTheme()" id="themeBtn">☀️ โหมดสว่าง (Light)</button>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <!-- TAB 1: STUDY GUIDE -->
+    <div id="study" class="tab-pane active">
+        <div class="study-layout">
+            <aside class="toc-box">
+                <h3>สารบัญบทเรียน</h3>
+                <ul class="toc-links">
+                    <li><a href="#ch1">1. Intro to DB & SQL Review</a></li>
+                    <li><a href="#ch2">2. ANSI-SPARC & Architectures</a></li>
+                    <li><a href="#ch3">3. Relational Model & Keys</a></li>
+                    <li><a href="#ch4">4. ER Model (Conceptual)</a></li>
+                    <li><a href="#ch5">5. Logical DB Design (Mapping)</a></li>
+                    <li><a href="#ch6">6. Enhanced ER (Super/Subclass)</a></li>
+                    <li><a href="#ch7">7. Normalization (UNF - BCNF)</a></li>
+                    <li><a href="#ch8">8. 15 Common Design Mistakes</a></li>
+                    <li><a href="#ch9">9. DDL, DML & Timestamp (Lab 10)</a></li>
+                </ul>
+            </aside>
+
+            <main>
+                <!-- CH 1 -->
+                <article class="card" id="ch1">
+                    <div class="card-title"><span class="tag">บทที่ 1</span><h2>Introduction to Database & SQL Review</h2></div>
+                    <p><strong>Database (ฐานข้อมูล)</strong> คือ กลุ่มของข้อมูลที่มีความสัมพันธ์กันอย่างมีตรรกะ (Logically related data) พร้อมคำอธิบายโครงสร้างข้อมูล (Metadata) ที่เก็บไว้ใช้ร่วมกันภายในองค์กร โดยมีคุณสมบัติ <strong>Persistent Data</strong> (ข้อมูลคงอยู่ถาวรแม้โปรแกรมที่สร้างจะปิดไปแล้ว)</p>
+                    <h3>1. กลุ่มคำสั่ง SQL ทั้ง 4 ประเภท</h3>
+                    <ul>
+                        <li><strong>DDL (Data Definition Language):</strong> นิยามและแก้ไขโครงสร้างตาราง ได้แก่ <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code></li>
+                        <li><strong>DML (Data Manipulation Language):</strong> จัดการข้อมูลในตาราง ได้แก่ <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></li>
+                        <li><strong>DCL (Data Control Language):</strong> ควบคุมสิทธิ์การเข้าถึง ได้แก่ <code>GRANT</code>, <code>REVOKE</code></li>
+                        <li><strong>Transaction Control:</strong> ควบคุมทรานแซคชัน ได้แก่ <code>COMMIT</code>, <code>ROLLBACK</code>, <code>SAVEPOINT</code>, <code>SET ISOLATION</code></li>
+                    </ul>
+                    <h3>2. ประเภทของข้อมูล & บทบาทบุคลากร (Actors)</h3>
+                    <ul>
+                        <li><strong>Structured Data:</strong> ข้อมูลที่มีโครงสร้างตารางชัดเจน จัดการด้วย RDBMS (MySQL, PostgreSQL, Oracle, SQL Server, SQLite)</li>
+                        <li><strong>Semi-structured Data:</strong> ข้อมูลกึ่งโครงสร้าง เช่น <code>XML</code>, <code>JSON</code></li>
+                        <li><strong>Unstructured Data:</strong> ข้อมูลไร้โครงสร้าง เช่น วิดีโอ, เสียง, รูปภาพ, เอกสาร, อีเมล (มักใช้ NoSQL เช่น MongoDB, Redis, Apache HBase, Cassandra)</li>
+                        <li><strong>Metadata / Data Dictionary / System Catalog:</strong> คำอธิบายของข้อมูล (Self-describing nature) เก็บชื่อตาราง คอลัมน์ ชนิดข้อมูล และ Constraints</li>
+                        <li><strong>Actors ในระบบฐานข้อมูล:</strong>
+                            <ul>
+                                <li><strong>Data Administrator (DA):</strong> วางแผนระบบ (System Planning) และกำหนดนิยามข้อมูลระดับนโยบาย</li>
+                                <li><strong>Database Designer / Analyst:</strong> เก็บรวบรวม Requirement จากผู้ใช้ และออกแบบฐานข้อมูล</li>
+                                <li><strong>Database Administrator (DBA):</strong> ตั้งค่าระบบ (Config), ดูแลรักษา และปรับจูนประสิทธิภาพ (Maintain/Tune)</li>
+                                <li><strong>Application Developer / Programmer:</strong> เขียนโปรแกรมเชื่อมต่อฐานข้อมูล</li>
+                                <li><strong>End User:</strong> ผู้ให้ข้อมูลความต้องการและใช้งานระบบ</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="lecture-note">
+                        <strong>📌 จุดเน้นจากอาจารย์ในคลาส (Week 1 - 3):</strong>
+                        <ul>
+                            <li><strong>หลักการ JOIN:</strong> ถ้าข้อมูลที่ต้องการมีครบในตารางเดียวอยู่แล้ว <strong>"ไม่ต้อง JOIN"</strong> (เช่น หายอดรวมแต่ละออเดอร์จาก <code>SUM(quantityOrdered * priceEach)</code> และ <code>GROUP BY orderNumber</code> สามารถดึงจากตาราง <code>orderdetails</code> ตารางเดียวได้เลย)</li>
+                            <li><strong>WHERE vs HAVING:</strong> ห้ามใช้ <code>WHERE</code> กรองค่าที่ได้จากฟังก์ชัน <code>SUM()</code> หรือ <code>COUNT()</code>! ต้องใช้ <code>HAVING</code> เพื่อกรองกลุ่มหลังจาก <code>GROUP BY</code> แล้ว และอาจารย์แนะนำให้เขียน <strong>Original Expression</strong> หลัง <code>HAVING</code> (เช่น <code>HAVING SUM(quantityOrdered * priceEach) > 50000</code>) แทนการใช้ชื่อ Alias เพื่อให้รันได้ทุก DBMS ตามมาตรฐาน SQL</li>
+                            <li><strong>การรวมผลลัพธ์ตารางด้วย UNION:</strong> หากต้องการเช็คจำนวนแถว <code>SELECT COUNT(*)</code> ของหลายตารางในการรันครั้งเดียว สามารถใช้ Set Operator คือ <code>UNION</code> เชื่อมกันได้</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- CH 2 -->
+                <article class="card" id="ch2">
+                    <div class="card-title"><span class="tag">บทที่ 2</span><h2>Database Environment & Architecture</h2></div>
+                    <h3>1. สถาปัตยกรรม ANSI-SPARC (3-Level Architecture)</h3>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>ระดับ (Level)</th><th>Schema</th><th>หน้าที่และตัวอย่าง</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>External Level</strong></td><td>External Views (มีหลาย View)</td><td>มุมมองเฉพาะของผู้ใช้แต่ละคน เห็นเฉพาะข้อมูลที่ตนสนใจ (เช่น View แสดง <code>age</code> ที่คำนวณมาจากวันเกิด)</td></tr>
+                                <tr><td><strong>Conceptual Level</strong></td><td>Conceptual Schema</td><td>โครงสร้างเชิงตรรกะของทั้งองค์กร บอกว่าเก็บข้อมูลอะไร (Entities, Attributes, Relationships, Constraints) เช่น เก็บ <code>DOB</code> (วันเกิด)</td></tr>
+                                <tr><td><strong>Internal Level</strong></td><td>Internal Schema</td><td>โครงสร้างทางกายภาพ (Physical implementation) บอกว่าเก็บลงดิสก์อย่างไรให้เร็วและประหยัดพื้นที่ (เช่น <code>struct</code>, Indexes, Pointers, Data files)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>2. Data Independence (ความเป็นอิสระของข้อมูล)</h3>
+                    <ul>
+                        <li><strong>Logical Data Independence:</strong> การเปลี่ยน <em>Conceptual Schema</em> (เช่น เพิ่มตาราง/คอลัมน์) โดยไม่กระทบต่อ <em>External Views</em> หรือโปรแกรมของผู้ใช้</li>
+                        <li><strong>Physical Data Independence:</strong> การเปลี่ยน <em>Internal Schema</em> (เช่น สร้าง Index ใหม่, ย้ายไฟล์ข้อมูล) โดยไม่กระทบต่อ <em>Conceptual Schema</em></li>
+                    </ul>
+                    <h3>3. สถาปัตยกรรม Multi-user DBMS</h3>
+                    <ul>
+                        <li><strong>Teleprocessing:</strong> ใช้ Mainframe ประมวลผลตรงกลางทั้งหมดผ่าน Dumb Terminals ทำให้คอมพิวเตอร์กลางรับภาระหนักมาก (Network traffic ต่ำ แต่ค่าอุปกรณ์แพง)</li>
+                        <li><strong>File-Server:</strong> เซิร์ฟเวอร์ส่งทั้งไฟล์ข้อมูลผ่าน LAN มาให้ Workstation ที่มี DBMS ประมวลผลเอง ข้อเสียคือ <strong>Network Traffic สูงมาก</strong>, ต้องลง DBMS ทุกเครื่อง และคุม Concurrency/Recovery ยาก</li>
+                        <li><strong>Two-Tier Client-Server:</strong> Tier 1 (Fat Client) จัดการ UI และ Application Logic ส่วน Tier 2 (Database Server) รัน DBMS ประมวลผล SQL, เช็คสิทธิ์ และคุม Integrity</li>
+                        <li><strong>Three-Tier Client-Server:</strong> แยกเป็น Tier 1 (Thin Client - ใช้ฮาร์ดแวร์ราคาถูก), Tier 2 (Application Server เช่น Tomcat, Nginx, IIS, WebLogic, WildFly, GlassFish รัน Business Logic, ทำ Load Balancing และ Connection Pooling) และ Tier 3 (Database Server)</li>
+                        <li><strong>Middleware (ODBC / JDBC):</strong> ซอฟต์แวร์ตัวกลางที่ช่วยให้แอปพลิเคชันเชื่อมต่อกับฐานข้อมูลต่างชนิดกัน (Heterogeneous systems) ได้อย่างราบรื่น</li>
+                    </ul>
+                </article>
+
+                <!-- CH 3 -->
+                <article class="card" id="ch3">
+                    <div class="card-title"><span class="tag">บทที่ 3</span><h2>Relational Model, Keys & Integrity Constraints</h2></div>
+                    <p>คิดค้นโดย <strong>Dr. E.F. Codd (IBM, 1970)</strong> โดยอ้างอิงจากทฤษฎีเซตทางคณิตศาสตร์</p>
+                    <ul>
+                        <li><strong>Relation</strong> = Table | <strong>Attribute</strong> = Column | <strong>Tuple</strong> = Row</li>
+                        <li><strong>Degree</strong> = จำนวนคอลัมน์ (Attributes) ของตาราง | <strong>Cardinality</strong> = จำนวนแถว (Tuples) ของตาราง</li>
+                        <li><strong>Domain</strong> = ขอบเขตของค่าที่อนุญาตให้ใส่ในคอลัมน์นั้นๆ</li>
+                        <li><strong>ลำดับของแถวและคอลัมน์:</strong> ลำดับของ Tuple ไม่สำคัญ แต่เวลาใช้คำสั่ง <code>INSERT INTO table VALUES (...)</code> โดยไม่ระบุรายชื่อคอลัมน์ <strong>ลำดับของค่าต้องตรงกับลำดับของ Attribute ในตาราง</strong></li>
+                    </ul>
+                    <h3>ประเภทของ Keys และ Integrity Constraints</h3>
+                    <ul>
+                        <li><strong>Superkey:</strong> แอตทริบิวต์หรือกลุ่มของแอตทริบิวต์ที่ระบุแถวได้ไม่ซ้ำกัน (อาจมีคอลัมน์เกินความจำเป็นปนอยู่)</li>
+                        <li><strong>Candidate Key:</strong> Superkey ที่เล็กที่สุด (Minimal superkey) มี 2 คุณสมบัติคือ <strong>Uniqueness</strong> (ไม่ซ้ำ) และ <strong>Irreducibility</strong> (ตัดคอลัมน์ใดออกไม่ได้อีก)</li>
+                        <li><strong>Primary Key (PK):</strong> Candidate Key ที่ถูกเลือกมาเป็นคีย์หลักของตาราง (ห้ามเป็น NULL ตามกฎ <strong>Entity Integrity</strong>)</li>
+                        <li><strong>Alternate Key (AK):</strong> Candidate Key ตัวที่ไม่ได้ถูกเลือกเป็น PK (กำหนดด้วย <code>UNIQUE</code>)</li>
+                        <li><strong>Surrogate Key:</strong> คีย์เทียมที่เป็นตัวเลขรันอัตโนมัติ (<code>AUTO_INCREMENT</code>) ไม่มีผลทางธุรกิจ</li>
+                        <li><strong>Foreign Key (FK) & Referential Integrity:</strong> คีย์นอกที่อ้างอิงไปยัง PK ของตารางแม่ ค่าของ FK ต้องมีอยู่จริงในตารางแม่ หรือเป็น <code>NULL</code> เท่านั้น การจัดการเมื่อลบ/แก้ไขตารางแม่มี 3 แบบ:
+                            <ul>
+                                <li><code>RESTRICT</code> (หรือ <code>NO ACTION</code>): ห้ามลบ/แก้ไขตารางแม่ ถ้าตารางลูกยังอ้างอิงอยู่ (เป็นค่าเริ่มต้นหากไม่ระบุ)</li>
+                                <li><code>CASCADE</code>: ลบ/แก้ไขแถวในตารางลูกที่อ้างอิงอยู่ตามตารางแม่โดยอัตโนมัติ</li>
+                                <li><code>SET NULL</code>: เปลี่ยนค่า FK ในตารางลูกให้เป็น <code>NULL</code> (คอลัมน์ FK นั้นห้ามติด <code>NOT NULL</code>)</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </article>
+
+                <!-- CH 4 & 5 -->
+                <article class="card" id="ch4">
+                    <div class="card-title"><span class="tag">บทที่ 4 & 5</span><h2>ER Model (Conceptual) & Logical Database Design</h2></div>
+                    <div class="lecture-note">
+                        <strong>📌 กฎเหล็กจากอาจารย์ในการวาด ER และแปลงเป็นตาราง (Week 4, 6, 7):</strong>
+                        <ul>
+                            <li><strong>ใน Conceptual ER Diagram:</strong> ระบุเฉพาะ Primary Key <code>{PK}</code> เท่านั้น <strong>"ห้ามเขียน Foreign Key (FK) หรือรายละเอียด Constraint ย่อยๆ ลงในกล่อง Entity ของ Conceptual ER เด็ดขาด"</strong></li>
+                            <li><strong>การอ่านคำใบ้ Multiplicity จากโจทย์:</strong> ถ้าโจทย์ใช้คำว่า <strong>"may" (อาจจะ)</strong> แปลว่า Participation ขั้นต่ำเป็น <code>0</code> (Optional เช่น <code>0..*</code> หรือ <code>0..1</code>) แต่ถ้าใช้คำว่า <strong>"must" / "exactly one"</strong> แปลว่าขั้นต่ำเป็น <code>1</code> (Mandatory เช่น <code>1..1</code> หรือ <code>1..*</code>)</li>
+                            <li><strong>Composite Attribute (เช่น <code>name</code> แยกเป็น <code>fName</code>, <code>minit</code>, <code>lName</code>):</strong> เวลาแปลงเป็นตารางใน Logical Design <strong>ให้สร้างเฉพาะคอลัมน์ย่อยสุดเท่านั้น (3 คอลัมน์) ห้ามสร้างคอลัมน์แม่ <code>name</code>!</strong></li>
+                            <li><strong>Derived Attribute (มีเครื่องหมาย <code>/</code> นำหน้า เช่น <code>/totalAmount</code>):</strong> ไม่ต้องสร้างเป็นคอลัมน์เก็บจริงในตาราง แต่ให้คำนวณผ่าน Query หรือสร้างเป็น <code>VIEW</code> แทน</li>
+                            <li><strong>Attribute บนเส้นความสัมพันธ์ (เส้นประชี้ที่เส้น):</strong> ถ้าเป็นความสัมพันธ์ <code>*:*</code> จะไปอยู่ในตารางกลางที่สร้างใหม่ แต่ถ้าเป็นความสัมพันธ์ <code>1:1</code> หรือ <code>1:*</code> <strong>"Foreign Key ไปอยู่ตารางฝั่งไหน แอตทริบิวต์บนเส้นความสัมพันธ์จะตามไปอยู่ตารางฝั่งนั้นด้วย!"</strong></li>
+                            <li><strong>การลากเส้นใน MySQL Workbench:</strong> ความสัมพันธ์ปกติ (รวมถึง Self-reference / Recursive) ต้องใช้ <strong>เส้นประ (Non-identifying)</strong> เท่านั้น ส่วน <strong>เส้นทึบ (Identifying)</strong> ใช้เฉพาะเมื่อ FK เข้าไปเป็นส่วนหนึ่งของ PK ในตารางลูก (เช่น Weak Entity หรือตารางกลางของ M:N)</li>
+                        </ul>
+                    </div>
+                    <h3 id="ch5">สรุปกฎ ER-to-Relational Mapping ทั้ง 7 ข้อ</h3>
+                    <ol>
+                        <li><strong>Strong Entity:</strong> สร้างตารางปกติ เอาเฉพาะ Simple attributes (ระดับย่อยสุดของ Composite)</li>
+                        <li><strong>Weak Entity:</strong> สร้างตารางใหม่ ดึง PK ของตารางแม่มาเป็น FK และใช้ <strong>(PK แม่ + Partial Key ลูก) เป็น Composite PK</strong></li>
+                        <li><strong>1:1 Relationship:</strong>
+                            <ul>
+                                <li>Mandatory ทั้งสองฝั่ง (<code>1..1</code> - <code>1..1</code>): <strong>ยุบรวมเป็น 1 ตาราง</strong></li>
+                                <li>Mandatory ฝั่งเดียว (<code>1..1</code> - <code>0..1</code>): เอา PK ของฝั่ง Optional (<code>0..1</code> - แม่) ไปใส่เป็น FK ในฝั่ง Mandatory (<code>1..1</code> - ลูก) และตั้งเป็น <code>NOT NULL</code>, <code>UNIQUE</code> เพื่อเลี่ยงค่าว่าง</li>
+                                <li>Optional ทั้งสองฝั่ง (<code>0..1</code> - <code>0..1</code>): เลือกวาง FK ฝั่งใดก็ได้ตามความเหมาะสม</li>
+                            </ul>
+                        </li>
+                        <li><strong>1:* Relationship:</strong> เอา PK ของฝั่ง One (<code>1</code>) ไปวางเป็น FK ที่ตารางฝั่ง Many (<code>*</code>) เสมอ ถ้าฝั่ง One มี Participation เป็น <code>1..1</code> ตัว FK นั้นต้องเป็น <code>NOT NULL</code></li>
+                        <li><strong>*:* (Many-to-Many) Relationship:</strong> สร้างตารางกลาง (Associative Table) ดึง PK ของทั้งสองฝั่งมาเป็น FK และรวมกันเป็น Composite PK (หรือใช้ Surrogate PK + UNIQUE คู่กัน)</li>
+                        <li><strong>Multi-valued Attribute (เช่น <code>telNo [1..3]</code>):</strong> แยกไปสร้างตารางใหม่ ใช้ <strong>(PK ของตารางหลัก + ค่าของแอตทริบิวต์นั้น) เป็น Composite PK</strong></li>
+                        <li><strong>N-ary Relationship ($n > 2$):</strong> สร้างตารางกลางใหม่ ดึง PK ของทุก Entity ที่เข้าร่วมมาเป็น FK</li>
+                    </ol>
+                </article>
+
+                <!-- CH 6 -->
+                <article class="card" id="ch6">
+                    <div class="card-title"><span class="tag">บทที่ 6</span><h2>Enhanced ER Diagram (Specialization / Generalization)</h2></div>
+                    <p>Subclass จะสืบทอด (Inherit) แอตทริบิวต์และ Primary Key ทั้งหมดมาจาก Superclass เสมอ โดยมีข้อจำกัด 2 ด้านคือ <strong>Participation (Mandatory / Optional)</strong> และ <strong>Disjointness (Disjoint {Or} / Nondisjoint {And})</strong></p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr><th>Option</th><th>เงื่อนไข (Constraints)</th><th>จำนวนตารางที่ต้องสร้างใน Logical Design</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>Option 1</strong></td><td><strong>Mandatory, Nondisjoint {And}</strong><br>(ต้องเป็นคลาสลูก และเป็นได้มากกว่า 1 คลาส)</td><td><strong>1 ตารางเดียว (Single relation)</strong> รวมทุกคอลัมน์ของตัวแม่และตัวลูก พร้อมใส่ Flag/Discriminator บอกสถานะ</td></tr>
+                                <tr><td><strong>Option 2</strong></td><td><strong>Optional, Nondisjoint {And}</strong><br>(ไม่เป็นคลาสลูกก็ได้ แต่ถ้าเป็น เป็นได้หลายคลาส)</td><td><strong>2 ตาราง</strong>: ตารางที่ 1 สำหรับ Superclass และ ตารางที่ 2 รวมทุก Subclasses เข้าด้วยกันพร้อม Flag</td></tr>
+                                <tr><td><strong>Option 3</strong></td><td><strong>Mandatory, Disjoint {Or}</strong><br>(ต้องเป็นคลาสลูก และเป็นได้แค่คลาสเดียวเท่านั้น)</td><td><strong>หลายตาราง (เท่าจำนวน Subclass)</strong>: ยุบคอลัมน์ของ Superclass ลงไปรวมในตารางของแต่ละ Subclass เลย (ไม่มีตาราง Superclass แยก)</td></tr>
+                                <tr><td><strong>Option 4</strong></td><td><strong>Optional, Disjoint {Or}</strong><br>(ไม่เป็นคลาสลูกก็ได้ และถ้าเป็นก็เป็นได้แค่คลาสเดียว)</td><td><strong>หลายตาราง (1 Superclass + ทุก Subclass)</strong>: สร้าง 1 ตารางสำหรับ Superclass และสร้างตารางแยกสำหรับแต่ละ Subclass</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </article>
+
+                <!-- CH 7 -->
+                <article class="card" id="ch7">
+                    <div class="card-title"><span class="tag">บทที่ 7 & 8</span><h2>Normalization (UNF, 1NF, 2NF, 3NF, BCNF)</h2></div>
+                    <p>เป้าหมายหลักคือ <strong>ลดความซ้ำซ้อนของข้อมูล (Minimize data redundancy)</strong> และป้องกันความผิดปกติจากการปรับปรุงข้อมูล 3 รูปแบบ ได้แก่ <strong>Insertion Anomaly</strong>, <strong>Deletion Anomaly</strong>, และ <strong>Modification (Update) Anomaly</strong></p>
+                    <h3>ขั้นตอนการทำ Normalization</h3>
+                    <ul>
+                        <li><strong>UNF (Unnormalized Form):</strong> ตารางที่ยังมี <em>Repeating Group</em> หรือเก็บหลายค่าในช่องเดียวกัน</li>
+                        <li><strong>1NF (First Normal Form):</strong> ขจัด Repeating Group ให้ทุกช่องเก็บค่าเดี่ยว (Atomic value) ทำได้ 2 วิธีคือ Method 1 (Flattening เติมข้อมูลให้เต็มแถวแล้วใช้ Composite PK) หรือ Method 2 (แยกส่วนที่ซ้ำออกไปเป็นอีกตารางพร้อมสำเนา PK เดิม)</li>
+                        <li><strong>2NF (Second Normal Form):</strong> ต้องเป็น 1NF และ <strong>ไม่มี Partial Dependency</strong> (ไม่มี Non-prime attribute ใดที่ขึ้นอยู่กับแค่ "บางส่วน" ของ Composite PK) <em>หมายเหตุ: ถ้า PK เป็นคอลัมน์เดี่ยว ตารางที่เป็น 1NF จะเป็น 2NF โดยอัตโนมัติ</em></li>
+                        <li><strong>3NF (Third Normal Form):</strong> ต้องเป็น 2NF และ <strong>ไม่มี Transitive Dependency</strong> (ไม่มี Non-prime attribute ใดที่ขึ้นกับ Non-prime attribute ตัวอื่น เช่น $A \rightarrow B$ และ $B \rightarrow C$ โดยที่ $C$ ไม่ใช่ส่วนหนึ่งของคีย์)</li>
+                        <li><strong>BCNF (Boyce-Codd Normal Form):</strong> เข้มงวดกว่า 3NF คือ <strong>ทุกๆ Determinant (ฝั่งซ้ายของลูกศร $X \rightarrow Y$) จะต้องเป็น Candidate Key เสมอ!</strong></li>
+                    </ul>
+                    <div class="lecture-note">
+                        <strong>📌 ทริคสำคัญเรื่อง Prime vs Non-Prime Attribute และ BCNF จากอาจารย์ (Week 9):</strong>
+                        <ul>
+                            <li><strong>Prime Attribute</strong> คือ แอตทริบิวต์ที่เป็นส่วนหนึ่งของ <em>Candidate Key ใดๆ ก็ได้</em> ส่วน <strong>Non-prime Attribute</strong> คือ แอตทริบิวต์ทั่วไปที่ไม่ได้อยู่ใน Candidate Key เลย</li>
+                            <li>การจะถือว่าผิดกฎ <strong>2NF (Partial)</strong> หรือ <strong>3NF (Transitive)</strong> ตัวที่อยู่ฝั่งขวามือของลูกศร <strong>จะต้องเป็น Non-prime attribute เท่านั้น!</strong> ถ้าฝั่งขวามือเป็นส่วนหนึ่งของ Candidate Key (Prime attribute) จะ<strong>ไม่ถือว่าละเมิด 2NF หรือ 3NF</strong> แต่จะไปละเมิดกฎที่ระดับ <strong>BCNF</strong> แทน (เพราะฝั่งซ้ายไม่ใช่ Candidate Key)</li>
+                            <li>เมื่อแยกตารางใน BCNF แล้วพบว่ามี FD ที่มี <strong>Determinant (ตัวซ้ายมือ) เป็นตัวเดียวกัน</strong> (เช่น <code>driver_id -> driver_name</code> และ <code>driver_id -> vehicle_id</code>) <strong>ให้ยุบรวมไว้ในตารางเดียวกันได้เลย ไม่ต้องแยกเป็น 2 ตาราง!</strong></li>
+                        </ul>
+                    </div>
+                </article>
+
+                <!-- CH 8 -->
+                <article class="card" id="ch8">
+                    <div class="card-title"><span class="tag">บทที่ 9</span><h2>สรุป 15 ข้อผิดพลาดในการออกแบบฐานข้อมูล (15 Design Mistakes)</h2></div>
+                    <ol>
+                        <li><strong>Case 1 (Artist Genres):</strong> เก็บ <code>Genre1, Genre2, Genre3</code> หรือคั่นด้วยลูกน้ำ <code>'Jazz, Soul'</code> ผิด 1NF $\rightarrow$ ต้องแยกเป็นตารางใหม่ <code>ARTIST_GENRE(ArtistID, Genre)</code></li>
+                        <li><strong>Case 2 (Playlist Totals):</strong> เก็บ <code>SongCount</code> และ <code>TotalMinutes</code> เป็นคอลัมน์จริง ทำให้ข้อมูลขัดแย้งเมื่อเพิ่ม/ลบเพลง $\rightarrow$ เป็น Derived Attribute ต้องใช้ Query หรือ <code>VIEW</code> คำนวณแทน</li>
+                        <li><strong>Case 3 (Movies & Actors):</strong> ความสัมพันธ์ M:N แต่เอา <code>ActorID</code> ไปใส่ในตาราง <code>MOVIE</code> $\rightarrow$ ต้องสร้างตารางกลาง <code>CAST_MEMBER(MovieID, ActorID)</code></li>
+                        <li><strong>Case 4 (Airlines & Flights):</strong> ความสัมพันธ์ 1:N แต่เอา <code>FlightNo</code> ไปใส่ในฝั่ง One (<code>AIRLINE</code>) $\rightarrow$ ต้องเอา FK (<code>AirlineCode</code>) ไปวางไว้ที่ฝั่ง Many (<code>FLIGHT</code>) และตั้ง <code>NOT NULL</code></li>
+                        <li><strong>Case 5 (Recipe Quantities):</strong> เอาปริมาณวัตถุดิบ (<code>Quantity</code>) ไปไว้ในตาราง <code>INGREDIENT</code> $\rightarrow$ ปริมาณขึ้นอยู่กับทั้งสูตรและวัตถุดิบ ต้องเอาไว้ในตารางกลาง <code>RECIPE_INGREDIENT</code></li>
+                        <li><strong>Case 6 (Creators & Premium Users):</strong> ผู้ใช้เป็นได้ทั้งสองอย่าง (Both) หรือไม่เป็นเลย (Neither) แต่ใช้ <code>{Mandatory, Disjoint}</code> $\rightarrow$ ต้องใช้ <code>{Optional, Nondisjoint (AND)}</code></li>
+                        <li><strong>Case 7 (Pet Clinic Records):</strong> ใช้ชื่อสัตว์เลี้ยง (ซ้ำได้), เบอร์โทรเจ้าของ (เปลี่ยนได้), หรือเลขไมโครชิป (เป็น NULL ได้) เป็น PK $\rightarrow$ ต้องสร้าง Surrogate Key <code>PetID AUTO_INCREMENT</code> เป็น PK และตั้ง <code>UNIQUE</code> ให้ไมโครชิป</li>
+                        <li><strong>Case 8 (Hotel Stays):</strong> ใช้แค่ <code>(GuestID, RoomNo)</code> เป็น PK ทำให้ลูกค้าคนเดิมกลับมาพักห้องเดิมซ้ำในอนาคตไม่ได้ $\rightarrow$ ต้องเพิ่ม <code>CheckIn</code> เข้าไปใน PK หรือใช้ <code>StayID</code> เป็น Surrogate PK</li>
+                        <li><strong>Case 9 (Match Statistics):</strong> เอา <code>PlayerName, Position</code> มาไว้ในตาราง <code>MATCH_PLAYER(MatchID, PlayerID, ...)</code> เกิด Partial Dependency (ผิด 2NF) $\rightarrow$ แยกตาราง <code>PLAYER</code> ออกมา</li>
+                        <li><strong>Case 10 (Delivery Riders):</strong> เก็บ <code>ZoneName, ZoneFee</code> ไว้ในตาราง <code>RIDER</code> เกิด Transitive Dependency (ผิด 3NF) $\rightarrow$ แยกตาราง <code>ZONE</code> ออกมา</li>
+                        <li><strong>Case 11 (Café Prices):</strong> ดึงราคาปัจจุบัน (<code>CurrentPrice</code>) มาคำนวณใบเสร็จย้อนหลัง ทำให้ยอดเงินในอดีตเปลี่ยนเมื่อร้านขึ้นราคา $\rightarrow$ ต้องเก็บทั้ง <code>CurrentPrice</code> ในตารางเมนู และบันทึก <code>UnitPrice</code> (ราคาขายจริง ณ ตอนนั้น) ลงในตาราง <code>SALE_ITEM</code></li>
+                        <li><strong>Case 12 (Expense Claims):</strong> ยัดข้อมูลหัวเอกสารและรายการย่อยไว้ในตารางเดียวกัน $\rightarrow$ ต้องแยกเป็นตาราง <strong>Master (<code>CLAIM</code>)</strong> และ <strong>Detail (<code>CLAIM_ITEM</code>)</strong> โดยตั้ง FK เป็น <code>ON DELETE CASCADE</code></li>
+                        <li><strong>Case 13 (Mobile Plan History):</strong> ใช้ <code>UPDATE</code> ทับแพ็กเกจเดิมทำให้ประวัติเก่าหาย $\rightarrow$ ต้องสร้างตารางประวัติแยก <code>SUBSCRIPTION(SubscriberID, StartDate, PackageID, EndDate)</code></li>
+                        <li><strong>Case 14 (Ticket Sales):</strong> ใช้ <code>VARCHAR</code> เก็บวันที่และจำนวน, ใช้ <code>FLOAT</code> เก็บเงิน (บวกเลขทศนิยมคลาดเคลื่อน และเรียงลำดับผิด) $\rightarrow$ ต้องใช้ <code>DATE</code> สำหรับวันที่, <code>DECIMAL(10,2)</code> สำหรับเงิน, และ <code>INT</code> สำหรับจำนวนนับ</li>
+                        <li><strong>Case 15 (Fitness Club Members):</strong> ใช้ <code>INT</code> เก็บรหัสสมาชิก <code>00412</code> และเบอร์โทร (ทำให้เลข 0 นำหน้าหาย และใส่ <code>+</code> หรือ <code>-</code> ไม่ได้), ใช้ <code>CHAR(255)</code> เก็บชื่อ, ใช้ <code>VARCHAR</code> เก็บสถานะ $\rightarrow$ ต้องใช้ <code>CHAR(5)</code> เก็บรหัสคงที่, <code>VARCHAR(15)</code> เก็บเบอร์โทร, <code>VARCHAR(100)</code> เก็บชื่อ, และ <code>BOOLEAN</code> เก็บสถานะ</li>
+                    </ol>
+                </article>
+
+                <!-- CH 9 -->
+                <article class="card" id="ch9">
+                    <div class="card-title"><span class="tag">Lab 10 & SQL</span><h2>SQL DDL, Naming Convention & Automatic Timestamps</h2></div>
+                    <ul>
+                        <li><strong>ลำดับการสร้างและลบตาราง (Creation & Drop Order):</strong>
+                            <ul>
+                                <li><strong>การสร้าง (CREATE):</strong> ต้องสร้าง <strong>Parent Table (ตารางแม่ที่ไม่มี FK)</strong> ก่อน แล้วจึงสร้าง <strong>Child Table (ตารางลูกที่มี FK อ้างอิงตารางแม่)</strong></li>
+                                <li><strong>การลบ (DROP):</strong> ต้องลบ <strong>Child Table (ตารางลูก)</strong> ก่อน แล้วจึงลบ <strong>Parent Table (ตารางแม่)</strong></li>
+                            </ul>
+                        </li>
+                        <li><strong>มาตรฐานการตั้งชื่อ Constraint (Guideline ใน Lab 10):</strong> รูปแบบ <code>&lt;prefix&gt;_&lt;table&gt;_&lt;column&gt;</code> ตัวพิมพ์เล็กทั้งหมด คั่นด้วยขีดล่าง ความยาวไม่เกิน 64 ตัวอักษร เช่น <code>pk_member_member_id</code>, <code>uk_room_type_name</code>, <code>ck_room_type_rate</code>, <code>fk_booking_member_id</code></li>
+                        <li><strong>ข้อสังเกต <code>NOT NULL</code> (จากอาจารย์ Week 10):</strong> <code>NOT NULL</code> ต้องเขียนต่อท้าย Data Type ของคอลัมน์นั้นๆ โดยตรง ไม่สามารถแยกมาเขียนเป็น Table-level constraint ด้านล่างเหมือน <code>PRIMARY KEY</code>, <code>UNIQUE</code>, <code>CHECK</code> หรือ <code>FOREIGN KEY</code> ได้</li>
+                        <li><strong>การกำหนดเวลาอัตโนมัติ (Auditing Timestamps - BR6):</strong>
+<pre><code>created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</code></pre>
+                            <ul>
+                                <li>เมื่อ <code>INSERT</code> แถวใหม่: ทั้ง <code>created_at</code> และ <code>updated_at</code> จะได้เวลาปัจจุบันโดยอัตโนมัติ</li>
+                                <li>เมื่อ <code>UPDATE</code> แก้ไขค่าในคอลัมน์อื่นให้<strong>เปลี่ยนไปจากค่าเดิม</strong>: เฉพาะ <code>updated_at</code> จะเปลี่ยนเป็นเวลาใหม่ ส่วน <code>created_at</code> คงเดิม</li>
+                                <li><strong>จุดออกสอบสำคัญ (Lab 10 Task 5.3):</strong> ถ้ารันคำสั่ง <code>UPDATE</code> ซ้ำด้วยค่าเดิมเป๊ะๆ (ไม่มีคอลัมน์ไหนในแถวนั้นเปลี่ยนค่าไปจากเดิมเลย) <strong>ค่า <code>updated_at</code> จะไม่เปลี่ยนแปลง!</strong></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </article>
+            </main>
+        </div>
+    </div>
+
+    <!-- TAB 2: 70 QUIZ -->
+    <div id="quiz" class="tab-pane">
+        <div class="quiz-toolbar">
+            <div class="quiz-top">
+                <div>
+                    <h2 style="font-size:1.2rem;">🎯 แบบทดสอบเก็งข้อสอบปลายภาค 70 ข้อ (Single Choice 5 ตัวเลือก)</h2>
+                    <p style="font-size:0.88rem; color:var(--text-muted); margin:0;">อ้างอิงตามโครงสร้างข้อสอบจริงของอาจารย์: 70 ข้อ (35 คะแนน) เลือกคำตอบที่ดีที่สุดเพียงข้อเดียว</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:0.75rem;">
+                    <span class="score-badge" id="scoreDisplay">คะแนน: 0 / 70 (ตอบแล้ว 0 ข้อ)</span>
+                    <button class="btn" onclick="resetQuiz()">🔄 เริ่มทำใหม่</button>
+                </div>
+            </div>
+            <div class="cat-filters" id="filterContainer">
+                <button class="cat-btn active" onclick="filterQuestions('ALL', this)">ทั้งหมด (70)</button>
+                <button class="cat-btn" onclick="filterQuestions('Intro & SQL', this)">Intro & SQL (10)</button>
+                <button class="cat-btn" onclick="filterQuestions('Architecture', this)">Architecture (8)</button>
+                <button class="cat-btn" onclick="filterQuestions('Relational & Keys', this)">Relational & Keys (10)</button>
+                <button class="cat-btn" onclick="filterQuestions('ER & EER', this)">ER & EER Design (16)</button>
+                <button class="cat-btn" onclick="filterQuestions('Normalization', this)">Normalization (12)</button>
+                <button class="cat-btn" onclick="filterQuestions('Design Mistakes & DDL', this)">15 Mistakes & Lab 10 (14)</button>
+            </div>
+        </div>
+
+        <div id="quizList"></div>
+    </div>
+</div>
+
+<script>
+const questions = [
+    // PART 1: Intro & SQL (1-10)
+    {
+        id: 1, cat: "Intro & SQL",
+        q: "คำสั่ง SQL ในข้อใดจัดอยู่ในกลุ่ม Data Definition Language (DDL) ทั้งหมด?",
+        options: [
+            "A. SELECT, INSERT, UPDATE",
+            "B. CREATE, ALTER, DROP",
+            "C. GRANT, REVOKE, COMMIT",
+            "D. INSERT, DELETE, ROLLBACK",
+            "E. CREATE, SELECT, GRANT"
+        ],
+        ans: 1,
+        exp: "DDL (Data Definition Language) ใช้จัดการโครงสร้างของฐานข้อมูลและตาราง ได้แก่ CREATE, ALTER และ DROP ส่วน SELECT/INSERT/UPDATE/DELETE เป็น DML"
+    },
+    {
+        id: 2, cat: "Intro & SQL",
+        q: "จากตาราง orderdetails(orderNumber, productCode, quantityOrdered, priceEach, orderLineNumber) หากต้องการแสดงหมายเลขใบสั่งซื้อ (orderNumber) และยอดชำระเงินรวมของแต่ละใบสั่งซื้อ เฉพาะใบสั่งซื้อที่มียอดชำระเงินรวมมากกว่า 50,000 บาท ข้อใดเขียนคำสั่ง SQL ได้ถูกต้องและเป็นไปตามมาตรฐานที่อาจารย์แนะนำมากที่สุด?",
+        options: [
+            "A. SELECT orderNumber, SUM(quantityOrdered * priceEach) FROM orderdetails WHERE SUM(quantityOrdered * priceEach) > 50000 GROUP BY orderNumber;",
+            "B. SELECT orderNumber, quantityOrdered * priceEach AS total FROM orderdetails GROUP BY orderNumber HAVING total > 50000;",
+            "C. SELECT orderNumber, SUM(quantityOrdered * priceEach) AS total FROM orderdetails GROUP BY orderNumber HAVING SUM(quantityOrdered * priceEach) > 50000;",
+            "D. SELECT o.orderNumber, SUM(od.quantityOrdered * od.priceEach) FROM orders o JOIN orderdetails od ON o.orderNumber = od.orderNumber WHERE priceEach > 50000;",
+            "E. SELECT orderNumber, COUNT(quantityOrdered * priceEach) FROM orderdetails GROUP BY orderNumber HAVING COUNT(*) > 50000;"
+        ],
+        ans: 2,
+        exp: "อาจารย์เน้นย้ำใน Week 1 ว่า: 1) ข้อมูลอยู่ใน orderdetails ครบแล้วไม่ต้อง JOIN กับ orders 2) การกรองกลุ่มหลังซัมต้องใช้ HAVING ห้ามใช้ WHERE 3) หลัง HAVING ควรใช้ Original Expression คือ SUM(quantityOrdered * priceEach) แทนการใช้ชื่อ Alias เพื่อให้รันได้ทุก DBMS ตามมาตรฐาน"
+    },
+    {
+        id: 3, cat: "Intro & SQL",
+        q: "ข้อมูลประเภท XML และ JSON จัดอยู่ในกลุ่มโครงสร้างข้อมูล (Models of Data) ประเภทใด?",
+        options: [
+            "A. Structured data",
+            "B. Unstructured data",
+            "C. Semi-structured data",
+            "D. Relational data",
+            "E. Binary multimedia data"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 1: Structured data คือตารางใน RDBMS, Semi-structured data คือ XML/JSON, และ Unstructured data คือ วิดีโอ เสียง รูปภาพ เอกสาร อีเมล"
+    },
+    {
+        id: 4, cat: "Intro & SQL",
+        q: "คุณสมบัติใดของระบบฐานข้อมูลที่ระบุว่า 'ฐานข้อมูลมี System Catalog หรือ Data Dictionary ที่เก็บคำอธิบายโครงสร้างของข้อมูล (Metadata) ไว้ในตัวเอง'?",
+        options: [
+            "A. Data Persistency",
+            "B. Self-Describing Nature",
+            "C. Data Redundancy",
+            "D. Multi-user Concurrency",
+            "E. Economy of Scale"
+        ],
+        ans: 1,
+        exp: "Self-Describing Nature หมายถึงการที่ระบบฐานข้อมูลเก็บคำอธิบายโครงสร้าง ชนิดข้อมูล และข้อจำกัดต่างๆ (เรียกว่า Metadata) ไว้ใน DBMS Catalog / Data Dictionary"
+    },
+    {
+        id: 5, cat: "Intro & SQL",
+        q: "บุคลากร (Actor) ในตำแหน่งใดที่มีหน้าที่หลักในการตั้งค่าระบบ (Config) ดูแลรักษา และปรับจูนประสิทธิภาพ (Maintain/Tune) ของระบบฐานข้อมูลในขั้นตอน System Implementation และ Maintenance?",
+        options: [
+            "A. Data Administrator (DA)",
+            "B. Database Designer / Analyst",
+            "C. Application Developer / Programmer",
+            "D. Database Administrator (DBA)",
+            "E. End User"
+        ],
+        ans: 3,
+        exp: "ตามแผนภาพ Actors in the Database Environment: Data Administrator (DA) ดูแลการวางแผน (Plan/Define), Database Designer ดูแลการเก็บ Requirement และ Design, ส่วน Database Administrator (DBA) ดูแลการ Config และ Maintain/Tune"
+    },
+    {
+        id: 6, cat: "Intro & SQL",
+        q: "หากต้องการเพิ่มเงื่อนไขตรวจสอบให้กับคอลัมน์ email ในตาราง student ที่มีอยู่แล้ว เพื่อบังคับว่าอีเมลจะต้องมีเครื่องหมาย '@' อยู่ภายในข้อความเสมอ คำสั่งในข้อใดถูกต้อง?",
+        options: [
+            "A. ALTER TABLE student ADD CONSTRAINT ck_student_email CHECK (email = '@');",
+            "B. ALTER TABLE student ADD CONSTRAINT ck_student_email CHECK (email LIKE '%@%');",
+            "C. ALTER TABLE student MODIFY email CHECK (email CONTAINS '@');",
+            "D. UPDATE student ADD CHECK (email LIKE '@%');",
+            "E. CREATE CHECK CONSTRAINT ck_student_email ON student(email LIKE '%@%');"
+        ],
+        ans: 1,
+        exp: "จากสคริปต์สอน Week 3: การตรวจสอบว่ามีตัวอักษร '@' อยู่ตรงกลางโดยข้างหน้าและข้างหลังมีอักษรใดๆ ก็ได้ ต้องใช้ LIKE '%@%' ร่วมกับ ALTER TABLE ... ADD CONSTRAINT ... CHECK (...)"
+    },
+    {
+        id: 7, cat: "Intro & SQL",
+        q: "เมื่อเราพยายามรันคำสั่ง ALTER TABLE เพื่อเพิ่ม CHECK constraint ลงในตารางที่มีข้อมูลอยู่แล้ว แต่ระบบแจ้ง Error ว่า 'Check constraint is violated' เราต้องแก้ไขอย่างไรจึงจะเพิ่ม Constraint สำเร็จ?",
+        options: [
+            "A. ต้องลบฐานข้อมูล (DROP DATABASE) แล้วสร้างใหม่เท่านั้น",
+            "B. ใช้คำสั่ง UPDATE แก้ไขแถวข้อมูลเดิมที่ผิดเงื่อนไขให้ถูกต้องเสียก่อน (โดยระบุ WHERE ให้ชัดเจน) แล้วจึงรันคำสั่ง ALTER TABLE อีกครั้ง",
+            "C. เปลี่ยนจากคำสั่ง CHECK เป็นคำสั่ง UNIQUE แทน",
+            "D. ลบ Primary Key ของตารางออกก่อน",
+            "E. ใช้คำสั่ง GRANT เพื่อให้สิทธิ์ข้ามการตรวจเช็คข้อมูลเดิม"
+        ],
+        ans: 1,
+        exp: "จาก Week 3: ที่แอด CHECK constraint ไม่สำเร็จเพราะมีข้อมูลแถวเดิมในตารางที่ละเมิดกฎอยู่ ต้องใช้คำสั่ง UPDATE ... SET ... WHERE ... เข้าไปแก้ข้อมูลแถวนั้นให้ถูกรูปแบบก่อน แล้วค่อยรัน ALTER TABLE ซ้ำ"
+    },
+    {
+        id: 8, cat: "Intro & SQL",
+        q: "ในการเขียนสคริปต์ SQL เพื่อเพิ่มข้อมูล 2 แถวลงในตาราง course ด้วยคำสั่ง INSERT เพียงคำสั่งเดียว (Single statement) ใน MySQL ข้อใดมีรูปแบบ Syntax ที่ถูกต้อง?",
+        options: [
+            "A. INSERT INTO course VALUES ('INT191', 'DB Design'), VALUES ('INT192', 'Web Dev');",
+            "B. INSERT INTO course VALUES ('INT191', 'DB Design') AND ('INT192', 'Web Dev');",
+            "C. INSERT INTO course VALUES ('INT191', 'DB Design'), ('INT192', 'Web Dev');",
+            "D. INSERT MULTIPLE INTO course VALUES [('INT191', 'DB Design'), ('INT192', 'Web Dev')];",
+            "E. INSERT INTO course SELECT ('INT191', 'DB Design'), ('INT192', 'Web Dev');"
+        ],
+        ans: 2,
+        exp: "จาก Week 3 ข้อ 4: ใน MySQL สามารถรวบการ INSERT หลายแถวใน statement เดียวได้โดยใช้ VALUES (ชุดที่ 1), (ชุดที่ 2); คั่นแต่ละวงเล็บด้วยเครื่องหมายคอมม่า (,)"
+    },
+    {
+        id: 9, cat: "Intro & SQL",
+        q: "หากต้องการเขียนคำสั่งนับจำนวนแถวของทั้ง 3 ตาราง (student, course, enrollment) ให้แสดงผลลัพธ์รวมกันออกมาในการรันเพียงครั้งเดียว (รูปเดียว) ตามที่อาจารย์สาธิตใน Week 3 สามารถใช้ Set Operator ใดมาเชื่อมคำสั่ง SELECT COUNT(*) ของแต่ละตารางได้?",
+        options: [
+            "A. JOIN",
+            "B. GROUP BY",
+            "C. HAVING",
+            "D. UNION (หรือ UNION ALL)",
+            "E. CASCADE"
+        ],
+        ans: 3,
+        exp: "จาก Week 3 ข้อ 6: อาจารย์สาธิตการใช้ UNION ซึ่งเป็น Set Operator ในการนำผลลัพธ์ของ SELECT COUNT(*) จากทั้ง 3 ตารางมารวมต่อกันในผลลัพธ์เดียว"
+    },
+    {
+        id: 10, cat: "Intro & SQL",
+        q: "ในการทำสคริปต์ .sql ให้มีคุณสมบัติเป็น 'Re-runnable script' (สามารถกดรันซ้ำกี่รอบก็ได้โดยไม่เกิด Error ว่าฐานข้อมูลหรือตารางซ้ำ) ควรทำอย่างไร?",
+        options: [
+            "A. ใส่คำสั่ง COMMIT; ไว้ที่บรรทัดแรกของไฟล์เสมอ",
+            "B. ใส่คำสั่ง DROP DATABASE IF EXISTS หรือ DROP TABLE IF EXISTS (หรือใช้ IF NOT EXISTS) ไว้ก่อนสร้างฐานข้อมูลและตาราง",
+            "C. ลบ Primary Key และ Foreign Key ออกจากทุกตาราง",
+            "D. เปลี่ยนคำสั่ง CREATE TABLE เป็น ALTER TABLE ทั้งหมด",
+            "E. ใช้คำสั่ง ROLLBACK; ไว้ที่บรรทัดสุดท้ายของสคริปต์"
+        ],
+        ans: 1,
+        exp: "จากสคริปต์สอน Week 2 และ Week 10: การทำสคริปต์ให้เป็น Re-runnable ต้องมีการเคลียร์ของเดิมก่อนด้วย DROP DATABASE IF EXISTS / DROP TABLE IF EXISTS หรือใช้ตัวเลือก IF NOT EXISTS"
+    },
+
+    // PART 2: Architecture (11-18)
+    {
+        id: 11, cat: "Architecture",
+        q: "ในสถาปัตยกรรม ANSI-SPARC 3 ระดับ ระดับใดที่อธิบายโครงสร้างเชิงตรรกะของฐานข้อมูลทั้งหมดในองค์กร (ว่าเก็บ Entities ใดบ้าง และมีความสัมพันธ์กันอย่างไร) โดยไม่สนใจรายละเอียดการจัดเก็บทางกายภาพ?",
+        options: [
+            "A. External level",
+            "B. Conceptual level",
+            "C. Internal level",
+            "D. Physical data organization level",
+            "E. Application presentation level"
+        ],
+        ans: 1,
+        exp: "Conceptual level (Conceptual schema) เป็นตัวแทนโครงสร้างเชิงตรรกะของฐานข้อมูลทั้งหมดในองค์กร บอกว่าเก็บข้อมูลอะไรและความสัมพันธ์เป็นอย่างไร"
+    },
+    {
+        id: 12, cat: "Architecture",
+        q: "จากตัวอย่าง Mapping ในสถาปัตยกรรม ANSI-SPARC หากที่ระดับ Conceptual เก็บคอลัมน์วันเกิดเป็น 'DOB' แต่ที่มุมมองของผู้ใช้ (External View 1) เห็นเป็นคอลัมน์อายุ 'age' ข้อใดกล่าวถูกต้อง?",
+        options: [
+            "A. ข้อมูล age ต้องถูกบันทึกแยกเป็นอีกไฟล์หนึ่งในระดับ Internal level เสมอ",
+            "B. ผู้ใช้ใน External View 2 จะต้องเห็นคอลัมน์ age ด้วยเสมอไม่สามารถซ่อนได้",
+            "C. DBMS ทำหน้าที่แปลง (Map) และคำนวณค่า age จาก DOB ให้ผู้ใช้ใน External View 1 เห็นโดยไม่จำเป็นต้องเก็บค่า age จริงในฐานข้อมูล",
+            "D. การเปลี่ยนชื่อจาก sNo ใน View 1 เป็น staffNo ใน Conceptual level ทำให้เกิด Physical data dependence",
+            "E. ระดับ External level มีหน้าที่กำหนด Index และ Pointer ของข้อมูล"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 2 หน้า 9: External view สามารถปรับแต่งให้เหมาะกับผู้ใช้แต่ละกลุ่มได้ เช่น คำนวณ age มาจาก DOB ที่เก็บอยู่ใน Conceptual level"
+    },
+    {
+        id: 13, cat: "Architecture",
+        q: "ความสามารถในการแก้ไขโครงสร้างที่ระดับ Conceptual Schema (เช่น การเพิ่มตารางใหม่ หรือการเพิ่มคอลัมน์ใหม่) โดยไม่ส่งผลกระทบต่อ External Schemas หรือโปรแกรมประยุกต์ของผู้ใช้ เรียกว่าอะไร?",
+        options: [
+            "A. Physical data independence",
+            "B. Logical data independence",
+            "C. Referential integrity",
+            "D. Internal schema mapping",
+            "E. Hardware abstraction"
+        ],
+        ans: 1,
+        exp: "Logical data independence คือความเป็นอิสระระหว่าง External level กับ Conceptual level (แก้ Conceptual แล้วไม่กระทบ External Views)"
+    },
+    {
+        id: 14, cat: "Architecture",
+        q: "หาก DBA ทำการสร้าง Index เพิ่มเติม หรือปรับเปลี่ยนโครงสร้างไฟล์ระดับ Internal Schema เพื่อเพิ่มความเร็วในการค้นหา โดยที่โครงสร้างตารางในระดับ Conceptual Schema ไม่ได้รับผลกระทบใดๆ คุณสมบัตินี้เรียกว่าอะไร?",
+        options: [
+            "A. Logical data independence",
+            "B. External view customization",
+            "C. Physical data independence",
+            "D. Two-tier client decoupling",
+            "E. Data redundancy control"
+        ],
+        ans: 2,
+        exp: "Physical data independence คือความเป็นอิสระระหว่าง Conceptual level กับ Internal level (แก้การจัดเก็บทางกายภาพใน Internal schema โดยไม่กระทบ Conceptual schema)"
+    },
+    {
+        id: 15, cat: "Architecture",
+        q: "ข้อใดคือข้อเสียเปรียบหลักของสถาปัตยกรรมแบบ File-Server Architecture เมื่อเปรียบเทียบกับ Two-Tier Client-Server Architecture?",
+        options: [
+            "A. หน้าจอฝั่งผู้ใช้เป็นเพียง Dumb Terminal ที่ไม่สามารถประมวลผลอะไรได้เลย",
+            "B. มีปริมาณข้อมูลวิ่งผ่านเครือข่ายสูงมาก (High network traffic) และเครื่อง Workstation ทุกเครื่องต้องติดตั้ง DBMS เต็มรูปแบบ",
+            "C. ไม่สามารถใช้งานผ่านระบบเครือข่าย LAN ได้",
+            "D. เซิร์ฟเวอร์ทำหน้าที่ประมวลผลคำสั่ง SQL ทั้งหมดจนเกิดคอขวดที่เซิร์ฟเวอร์",
+            "E. ไม่จำเป็นต้องมีการควบคุม Concurrency และ Recovery"
+        ],
+        ans: 1,
+        exp: "ในระบบ File-Server ตัว File-server ส่งทั้งไฟล์ข้ามเครือข่ายมาให้ Workstation ประมวลผล ทำให้เกิด Network traffic สูงมาก ต้องใช้สำเนา DBMS บนทุกเครื่อง และควบคุม Concurrency/Integrity ยาก"
+    },
+    {
+        id: 16, cat: "Architecture",
+        q: "ในสถาปัตยกรรมแบบ Two-Tier Client-Server หน้าที่ใดต่อไปนี้เป็นหน้าที่ของฝั่ง Database Server (Tier 2)?",
+        options: [
+            "A. จัดการส่วนติดต่อผู้ใช้ (User Interface) และแสดงผลฟอร์ม",
+            "B. รับข้อมูลจากผู้ใช้และตรวจสอบไวยากรณ์เบื้องต้น (Syntax check of user input)",
+            "C. ประมวลผล Query/Update, ตรวจสอบสิทธิ์ (Authorization), รักษา Integrity Constraints และควบคุม Concurrency/Recovery",
+            "D. แสดงผลหน้าเว็บด้วย HTML และ CSS บนเบราว์เซอร์",
+            "E. ทำหน้าที่เป็น Thin Client เพื่อลดต้นทุนฮาร์ดแวร์"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 2 หน้า 23: ใน Two-tier ฝั่ง Client (Tier 1) ดูแล UI และ Application logic ส่วนฝั่ง Database Server (Tier 2) ดูแลการประมวลผล Query, Authorization, Integrity, System catalog, Concurrency และ Recovery"
+    },
+    {
+        id: 17, cat: "Architecture",
+        q: "ข้อใดคือข้อดีของสถาปัตยกรรมแบบ Three-Tier Client-Server เหนือกว่าแบบ Two-Tier Client-Server?",
+        options: [
+            "A. เครื่องของฝั่งผู้ใช้ต้องใช้สเปกฮาร์ดแวร์ที่สูงขึ้น (Fat client)",
+            "B. ย้ายการเก็บฐานข้อมูลทั้งหมดมาไว้ที่เครื่อง Client เพื่อลดการใช้เครือข่าย",
+            "C. ใช้ฮาร์ดแวร์ฝั่ง Client ราคาถูกลง (Thin client), รวมศูนย์การดูแล Business Logic ไว้ที่ Application Server, และทำ Load Balancing ได้ง่ายขึ้น",
+            "D. ตัดความจำเป็นในการใช้ Database Server ออกไปทั้งหมด",
+            "E. มีความเป็น Modularity ของแต่ละชั้นต่ำกว่าแบบ Two-Tier"
+        ],
+        ans: 2,
+        exp: "Three-Tier แยกชั้น Application Server (Tier 2) ออกมาดูแล Business Logic ทำให้ Client เป็น Thin Client ที่ใช้ฮาร์ดแวร์ราคาถูก ดูแลรักษาซอฟต์แวร์จากศูนย์กลาง มี Modularity สูง และทำ Load Balance ได้ดี"
+    },
+    {
+        id: 18, cat: "Architecture",
+        q: "ซอฟต์แวร์อย่าง ODBC (Open Database Connectivity) และ JDBC จัดเป็นซอฟต์แวร์ประเภทใดในระบบฐานข้อมูล?",
+        options: [
+            "A. Relational Database Management System (RDBMS)",
+            "B. NoSQL Document Store",
+            "C. Database-oriented Middleware",
+            "D. Operating System Kernel",
+            "E. Front-end UI Framework"
+        ],
+        ans: 2,
+        exp: "ODBC และ JDBC เป็นตัวอย่างของ Database-oriented Middleware ที่ทำหน้าที่เป็นตัวกลางเชื่อมแอปพลิเคชันเข้ากับฐานข้อมูลที่หลากหลายผ่านอินเทอร์เฟซเดียว"
+    },
+
+    // PART 3: Relational Model & Keys (19-28)
+    {
+        id: 19, cat: "Relational & Keys",
+        q: "กำหนดตาราง PrivateOwner(ownerNo, fName, lName, address, telNo) ซึ่งมีข้อมูลเจ้าของบ้านอยู่ทั้งหมด 4 แถว (4 rows) ข้อใดระบุค่า Degree และ Cardinality ของตารางนี้ได้ถูกต้อง?",
+        options: [
+            "A. Degree = 4, Cardinality = 5",
+            "B. Degree = 5, Cardinality = 4",
+            "C. Degree = 1, Cardinality = 20",
+            "D. Degree = 20, Cardinality = 1",
+            "E. Degree = 5, Cardinality = 5"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 3 หน้า 5: Degree คือจำนวน Attributes (คอลัมน์) ซึ่งมี 5 คอลัมน์ ส่วน Cardinality คือจำนวน Tuples (แถว) ซึ่งมี 4 แถว"
+    },
+    {
+        id: 20, cat: "Relational & Keys",
+        q: "ข้อใดกล่าวถูกต้องเกี่ยวกับคุณสมบัติของ Relation (Properties of Relations)?",
+        options: [
+            "A. ในหนึ่งช่องตาราง (Cell) สามารถเก็บข้อมูลหลายค่าคั่นด้วยคอมม่าได้",
+            "B. ตารางหนึ่งตารางสามารถมีแถวข้อมูลที่ซ้ำกันทุกคอลัมน์ (Duplicate tuples) ได้",
+            "C. ลำดับของแถว (Tuples) ไม่มีนัยสำคัญ แต่ทุกช่องในตารางต้องเก็บค่าเดี่ยว (Atomic value)",
+            "D. คอลัมน์สองคอลัมน์ในตารางเดียวกันสามารถตั้งชื่อซ้ำกันได้",
+            "E. ค่า NULL คือค่าตัวเลขศูนย์ (0) หรือช่องว่าง (Blank space)"
+        ],
+        ans: 2,
+        exp: "คุณสมบัติของ Relation คือ ทุกช่องเก็บค่า Atomic, ชื่อคอลัมน์ห้ามซ้ำ, ไม่มีแถวซ้ำ, ลำดับของแถวไม่มีนัยสำคัญ และ NULL แทนค่าที่ไม่ทราบค่าหรือไม่มีข้อมูล (ไม่ใช่เลข 0 หรือช่องว่าง)"
+    },
+    {
+        id: 21, cat: "Relational & Keys",
+        q: "คุณลักษณะ 2 ประการของ Candidate Key คือข้อใด?",
+        options: [
+            "A. Redundancy และ Nullable",
+            "B. Uniqueness (ระบุแถวได้ไม่ซ้ำ) และ Irreducibility (ไม่สามารถตัดแอตทริบิวต์ย่อยออกได้อีกโดยยังคงความไม่ซ้ำ)",
+            "C. Multi-valued และ Composite",
+            "D. Foreign reference และ Cascading",
+            "E. Auto-increment และ Derived"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 3 หน้า 19: Candidate key มี 2 คุณสมบัติสำคัญคือ Uniqueness และ Irreducibility (เป็น Minimal superkey ที่ไม่มีสับเซตแท้ใดเป็น superkey)"
+    },
+    {
+        id: 22, cat: "Relational & Keys",
+        q: "ในตาราง MEMBER(memberID, fullName, email, phone) ทั้ง memberID และ email ต่างก็มีค่าไม่ซ้ำกันเลยและสามารถระบุตัวตนสมาชิกได้ หากเราเลือก memberID ให้เป็น Primary Key แล้ว แอตทริบิวต์ email จะถูกเรียกว่าอะไรในเชิงทฤษฎี Relational Key และต้องกำหนด Constraint ใดใน SQL?",
+        options: [
+            "A. เรียกว่า Foreign Key และกำหนดเป็น REFERENCES",
+            "B. เรียกว่า Alternate Key และกำหนดเป็น UNIQUE (พร้อม NOT NULL ตามโจทย์)",
+            "C. เรียกว่า Surrogate Key และกำหนดเป็น AUTO_INCREMENT",
+            "D. เรียกว่า Partial Key และกำหนดเป็น CHECK",
+            "E. เรียกว่า Composite Key และกำหนดเป็น PRIMARY KEY ตัวที่สอง"
+        ],
+        ans: 1,
+        exp: "Candidate key ที่ไม่ได้ถูกเลือกให้เป็น Primary key จะเรียกว่า Alternate key และในการเขียน SQL สร้างตาราง (ตามที่อาจารย์สอนใน Week 2) เนื่องจากตารางมี PK ได้ตัวเดียว จึงต้องกำหนดให้ Alternate key มี Constraint เป็น UNIQUE"
+    },
+    {
+        id: 23, cat: "Relational & Keys",
+        q: "กฎความคงสภาพใดที่ระบุว่า 'ในทุกตารางต้องมี Primary Key และค่าของแอตทริบิวต์ที่เป็น Primary Key ห้ามเป็นค่าว่าง (NULL) เด็ดขาด'?",
+        options: [
+            "A. Domain integrity constraint",
+            "B. Entity integrity constraint",
+            "C. Referential integrity constraint",
+            "D. General business constraint",
+            "E. Transitive dependency constraint"
+        ],
+        ans: 1,
+        exp: "Entity integrity constraint กำหนดว่าทุก Relation ต้องมี Primary key และค่าของ Primary key ห้ามเป็น NULL"
+    },
+    {
+        id: 24, cat: "Relational & Keys",
+        q: "ตามกฎ Referential Integrity ค่าของ Foreign Key ในตารางลูก (Referencing relation) สามารถมีค่าเป็นอะไรได้บ้าง?",
+        options: [
+            "A. ต้องมีค่าไม่ซ้ำกันเลยในตารางลูก และห้ามเป็น NULL เสมอ",
+            "B. เป็นค่าใดๆ ก็ได้ที่ไม่ตรงกับตารางแม่",
+            "C. ต้องเป็นค่าที่มีอยู่จริงใน Primary Key ของตารางแม่ที่อ้างอิงถึง หรือเป็นค่า NULL (หากคอลัมน์นั้นอนุญาตให้เป็น NULL ได้)",
+            "D. ต้องเป็นค่าตัวเลขจำนวนเต็มที่เพิ่มขึ้นอัตโนมัติเท่านั้น",
+            "E. ต้องมีค่าเป็น NULL เสมอเมื่อสร้างแถวใหม่"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 3 หน้า 15 และ 25: ค่าของ Foreign Key ต้องตรงกับค่า Primary Key ที่มีอยู่จริงในตารางแม่ หรือไม่ก็เป็น NULL ทั้งหมด"
+    },
+    {
+        id: 25, cat: "Relational & Keys",
+        q: "ตาราง EMP มีคอลัมน์ DEPTNO เป็น Foreign Key อ้างอิงไปยังตาราง DEPT(DEPTNO) โดยกำหนดเป็น ON DELETE CASCADE หากในตาราง EMP มีพนักงานรหัส 101 และ 102 สังกัดแผนก DEPTNO = 20 เมื่อเรารันคำสั่ง DELETE FROM dept WHERE deptno = 20; จะเกิดผลลัพธ์ใดขึ้น?",
+        options: [
+            "A. ระบบปฏิเสธการลบและแจ้ง Error ทันที",
+            "B. แผนกที่ 20 ถูกลบออกจากตาราง DEPT และพนักงานรหัส 101 กับ 102 ในตาราง EMP ถูกลบตามไปด้วยโดยอัตโนมัติ",
+            "C. แผนกที่ 20 ถูกลบออกจากตาราง DEPT และคอลัมน์ DEPTNO ของพนักงานรหัส 101 กับ 102 ถูกเปลี่ยนเป็น NULL",
+            "D. พนักงานทุกคนในตาราง EMP ถูกลบออกทั้งหมด",
+            "E. แผนกที่ 20 ถูกลบออก แต่ข้อมูลในตาราง EMP ยังคงเป็นเลข 20 เหมือนเดิม"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 3 หน้า 27 และ 29: ON DELETE CASCADE จะทำการลบแถวในตารางแม่ และลบแถวที่จับคู่ตรงกันในตารางลูก (EMP ที่มี DEPTNO = 20) ตามไปด้วยโดยอัตโนมัติ"
+    },
+    {
+        id: 26, cat: "Relational & Keys",
+        q: "หากต้องการกำหนด Foreign Key ให้มี Referential Action เป็น ON DELETE SET NULL ข้อควรระวังที่สำคัญที่สุดเกี่ยวกับคอลัมน์ Foreign Key ในตารางลูกคือข้อใด?",
+        options: [
+            "A. คอลัมน์นั้นในตารางลูกจะต้องเป็น Primary Key เท่านั้น",
+            "B. คอลัมน์นั้นในตารางลูกห้ามถูกประกาศเป็น NOT NULL เด็ดขาด",
+            "C. คอลัมน์นั้นต้องมีชนิดข้อมูลเป็น VARCHAR เท่านั้น",
+            "D. คอลัมน์นั้นต้องตั้งค่า DEFAULT เป็น 0 เสมอ",
+            "E. ตารางแม่ต้องไม่มี Primary Key"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 3 หน้า 27: 'If you specify a SET NULL action, make sure that you have not declared the columns in the child table as NOT NULL.'"
+    },
+    {
+        id: 27, cat: "Relational & Keys",
+        q: "หากในตาราง DEPT มีรหัสแผนก (DEPTNO) เฉพาะหมายเลข 10, 20, 30 และ 40 เท่านั้น การสั่งรันคำสั่ง INSERT INTO emp(empno, ename, deptno) VALUES (104, 'D', 50); จะทำให้เกิดการละเมิดกฎข้อใด?",
+        options: [
+            "A. Entity integrity constraint",
+            "B. Domain constraint",
+            "C. Referential integrity constraint",
+            "D. Key uniqueness constraint",
+            "E. Functional dependency constraint"
+        ],
+        ans: 2,
+        exp: "เนื่องจากแผนก 50 ไม่มีอยู่จริงใน Primary Key ของตารางแม่ (DEPT) การ INSERT ค่า FK เป็น 50 จึงละเมิด Referential integrity constraint"
+    },
+    {
+        id: 28, cat: "Relational & Keys",
+        q: "การดำเนินการ DML ใดต่อไปนี้ที่อาจละเมิดได้เฉพาะกฎ Referential Integrity เพียงอย่างเดียวเท่านั้น (ไม่ละเมิด Domain, Key หรือ Entity Integrity)?",
+        options: [
+            "A. INSERT",
+            "B. UPDATE",
+            "C. DELETE",
+            "D. SELECT",
+            "E. ALTER"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 3 หน้า 34: 'DELETE may violate only referential integrity: if the primary key value of the tuple being deleted is referenced from other tuples in the database.'"
+    },
+
+    // PART 4: ER & EER Design (29-44)
+    {
+        id: 29, cat: "ER & EER",
+        q: "ข้อใดกล่าวถูกต้องเกี่ยวกับการออกแบบฐานข้อมูลระดับแนวคิด (Conceptual Database Design) ด้วย ER Model?",
+        options: [
+            "A. เป็นการออกแบบแบบ Bottom-up ที่เริ่มจากการนำแอตทริบิวต์ย่อยๆ มาจัดกลุ่ม",
+            "B. ต้องระบุชนิดข้อมูลเฉพาะของ DBMS (เช่น VARCHAR2, TINYINT) และขนาดของ Index ให้ครบถ้วน",
+            "C. เป็นการออกแบบแบบ Top-down ที่ไม่ขึ้นกับรายละเอียดการติดตั้งหรือ DBMS ใดๆ และในแผนภาพ Conceptual ER จะระบุเฉพาะ Primary Key โดยยังไม่ใส่ Foreign Key ลงใน Entity",
+            "D. ต้องใส่คอลัมน์ Foreign Key และคำสั่ง CHECK constraint ทั้งหมดลงในกล่อง Entity",
+            "E. ใช้สำหรับอธิบายโครงสร้างไฟล์และพาร์ทิชันบนฮาร์ดดิสก์"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 4 และคำอธิบายของอาจารย์ใน Week 4: ER Model เป็น Top-down approach ที่ไม่ขึ้นกับ DBMS และในสเต็ป Conceptual ER เราจะแสดงเฉพาะข้อมูลหลักและ Primary Key เท่านั้น จะยังไม่ใส่ Foreign Key ลงใน Entity"
+    },
+    {
+        id: 30, cat: "ER & EER",
+        q: "ความสัมพันธ์ในข้อใดจัดเป็น Recursive Relationship (หรือ Unary Relationship)?",
+        options: [
+            "A. พนักงาน (Staff) ลงทะเบียนให้ลูกค้า (Client) ที่สาขา (Branch)",
+            "B. เจ้าของบ้าน (PrivateOwner) เป็นเจ้าของอสังหาริมทรัพย์ (PropertyForRent)",
+            "C. รายวิชา (Course) มีเงื่อนไขต้องเรียนอีกรายวิชาหนึ่งมาก่อน (Prerequisite Course) ซึ่งเชื่อมกลับมายัง Entity รายวิชา (Course) เดิม",
+            "D. ทนายความ (Solicitor) จัดการประมูล (Bid) แทนผู้ซื้อ (Buyer) โดยมีสถาบันการเงิน (Financial Institution) สนับสนุน",
+            "E. แผนก (Department) มีสถานที่ตั้ง (Location) ได้หลายแห่ง"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 4 และคำอธิบายของอาจารย์ใน Week 4: Recursive relationship คือความสัมพันธ์ที่เชื่อมกลับเข้าหา Entity เดิม เช่น พนักงานเป็นหัวหน้าพนักงาน หรือวิชาตัวต่อ (Prerequisite course)"
+    },
+    {
+        id: 31, cat: "ER & EER",
+        q: "ในสัญลักษณ์ UML ของ ER Diagram ที่เรียนในวิชานี้ การเขียนแอตทริบิวต์ในรูปแบบ `/totalStaff` หรือ `/totalAmount` และการเขียนในรูปแบบ `telNo [1..3]` มีความหมายตามลำดับอย่างไร?",
+        options: [
+            "A. Primary Key และ Foreign Key",
+            "B. Composite Attribute และ Derived Attribute",
+            "C. Derived Attribute (ค่าได้จากการคำนวณ) และ Multi-valued Attribute (เก็บได้หลายค่า)",
+            "D. Weak Attribute และ Optional Attribute",
+            "E. Candidate Key และ Alternate Key"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 4 หน้า 19: เครื่องหมายทับ (/) นำหน้าชื่อแอตทริบิวต์ หมายถึง Derived attribute ส่วนวงเล็บก้ามปูระบุช่วงตัวเลข เช่น [1..3] หรือ [0..*] หมายถึง Multi-valued attribute"
+    },
+    {
+        id: 32, cat: "ER & EER",
+        q: "ข้อใดคือความหมายของ Weak Entity (เอนทิตีอ่อนแอ)?",
+        options: [
+            "A. เอนทิตีที่ไม่มีความสัมพันธ์กับเอนทิตีอื่นเลยในระบบ",
+            "B. เอนทิตีที่ไม่สามารถระบุตัวตนของแต่ละแถวได้อย่างไม่ซ้ำกันด้วยแอตทริบิวต์ของตัวมันเองเพียงลำพัง ต้องอาศัย Primary Key ของ Strong Entity (Owner) มาร่วมเป็นคีย์หลัก",
+            "C. เอนทิตีที่มีจำนวนแถวข้อมูลน้อยกว่า 10 แถว",
+            "D. เอนทิตีที่มีเฉพาะ Derived Attribute เท่านั้น",
+            "E. เอนทิตีที่เกิดจากการยุบรวมความสัมพันธ์แบบ 1:1"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 4 หน้า 20-21: Weak entity คือเอนทิตีที่ไม่สามารถระบุตัวตนด้วยแอตทริบิวต์ของตัวเองเพียงลำพังได้ ต้องพึ่งพาคีย์หลักของ Strong entity ผ่าน Identifying relationship"
+    },
+    {
+        id: 33, cat: "ER & EER",
+        q: "จากโจทย์ Business Requirement ที่ระบุว่า 'One department may have many students, and each student is admitted into exactly one department.' หากวาดเส้นความสัมพันธ์ระหว่าง DEPARTMENT และ STUDENT ข้อใดกำหนดค่า Multiplicity ได้ถูกต้องตามหลักการที่อาจารย์สอนใน Week 4?",
+        options: [
+            "A. ฝั่งติดกับ DEPARTMENT เป็น 0..* และฝั่งติดกับ STUDENT เป็น 1..1",
+            "B. ฝั่งติดกับ DEPARTMENT เป็น 1..1 และฝั่งติดกับ STUDENT เป็น 0..*",
+            "C. ฝั่งติดกับ DEPARTMENT เป็น 0..1 และฝั่งติดกับ STUDENT เป็น 1..*",
+            "D. ฝั่งติดกับ DEPARTMENT เป็น 1..* และฝั่งติดกับ STUDENT เป็น 1..*",
+            "E. ฝั่งติดกับ DEPARTMENT เป็น 0..1 และฝั่งติดกับ STUDENT เป็น 0..1"
+        ],
+        ans: 1,
+        exp: "จาก Week 4: นักศึกษา 1 คนต้องสังกัดแผนกเดียวเท่านั้น (exactly one) ดังนั้นปลายเส้นฝั่ง DEPARTMENT คือ 1..1 ส่วน 1 แผนก 'อาจจะมี' (may have) นักศึกษาหลายคนหรือยังไม่มีก็ได้ ดังนั้นปลายเส้นฝั่ง STUDENT คือ 0..* (หรือ 0..n)"
+    },
+    {
+        id: 34, cat: "ER & EER",
+        q: "ในค่า Multiplicity เช่น `0..*` หรือ `1..1` ตัวเลขตัวหน้า (0 หรือ 1) และตัวเลขตัวหลัง (1 หรือ *) เรียกว่าอะไรตามลำดับ?",
+        options: [
+            "A. Degree และ Domain",
+            "B. Participation (บังคับเข้าร่วมหรือไม่) และ Cardinality (จำนวนสูงสุดที่สัมพันธ์ได้)",
+            "C. Cardinality และ Participation",
+            "D. Primary Key และ Foreign Key",
+            "E. Superclass และ Subclass"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 4 หน้า 26-27: Multiplicity ประกอบด้วย Participation (ค่า min: 0 = Optional, 1 = Mandatory) และตามด้วย Cardinality (ค่า max: 1 หรือ */n)"
+    },
+    {
+        id: 35, cat: "ER & EER",
+        q: "ในขั้นตอนการแปลง ER Diagram เป็น Logical Design (Mapping) หากเอนทิตี Employee มี Composite Attribute ชื่อ `name` ซึ่งประกอบด้วยแอตทริบิวต์ย่อย `fName`, `minit`, และ `lName` เราจะต้องสร้างคอลัมน์ในตาราง Employee อย่างไร?",
+        options: [
+            "A. สร้างเฉพาะคอลัมน์ name เพียงคอลัมน์เดียว",
+            "B. สร้างทั้ง 4 คอลัมน์ คือ name, fName, minit, และ lName",
+            "C. สร้างเฉพาะคอลัมน์ระดับย่อยสุด 3 คอลัมน์ คือ fName, minit, และ lName โดยไม่ต้องสร้างคอลัมน์ name",
+            "D. แยก fName, minit, และ lName ออกไปสร้างเป็นอีกตารางหนึ่งต่างหาก",
+            "E. สร้างเป็นคอลัมน์เดียวแล้วคั่นด้วยเครื่องหมายจุลภาค"
+        ],
+        ans: 2,
+        exp: "จากสคริปต์อาจารย์ Week 6 ข้อ 4: สำหรับ Composite attribute เราจะสร้างคอลัมน์ตามเลเวลย่อยสุดเท่านั้น คือสร้างเฉพาะ fName, minit, lName (3 คอลัมน์) โดยไม่สร้างคอลัมน์ name"
+    },
+    {
+        id: 36, cat: "ER & EER",
+        q: "ในการแปลงความสัมพันธ์แบบ One-to-One (1:1) ที่ฝั่งหนึ่งเป็น Mandatory (`1..1`) และอีกฝั่งหนึ่งเป็น Optional (`0..1`) เช่น พนักงาน `Staff (1..1)` บริหารสาขา `Branch (0..1)` (สาขาทุกแห่งต้องมีผู้จัดการ 1 คน แต่พนักงานบางคนไม่ได้เป็นผู้จัดการ) ควรวาง Foreign Key ไว้อย่างไรเพื่อลดค่า NULL ให้มากที่สุด?",
+        options: [
+            "A. นำ branchNo ไปใส่เป็น Foreign Key ในตาราง Staff",
+            "B. นำ staffNo (จากฝั่ง Optional Parent) ไปใส่เป็น Foreign Key ในตาราง Branch (ฝั่ง Mandatory Child)",
+            "C. ต้องสร้างตารางใหม่ตรงกลางเสมอ",
+            "D. ลบทั้งสองตารางทิ้งแล้วสร้างเป็น View แทน",
+            "E. นำ Primary Key ของทั้งสองตารางไปใส่สลับกันทั้งสองฝั่ง"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 5 หน้า 14 และบทที่ 6 หน้า 3: กรณี 1:1 ที่เป็น Mandatory ฝั่งเดียว ให้ฝั่ง Optional (Staff) เป็น Parent และฝั่ง Mandatory (Branch) เป็น Child โดยนำ PK ของ Staff ไปใส่เป็น FK (mgrStaffNo) ในตาราง Branch จะทำให้ไม่มีค่า NULL เลยเพราะทุกสาขาต้องมีผู้จัดการ"
+    },
+    {
+        id: 37, cat: "ER & EER",
+        q: "ในการแปลงความสัมพันธ์แบบ One-to-One (1:1) ที่เป็น Mandatory ทั้งสองฝั่ง (`1..1` กับ `1..1`) เช่น `Staff (1..1) --- LivesAt --- (1..1) Address` ตามกฎการ Mapping ควรแปลงเป็นตารางอย่างไร?",
+        options: [
+            "A. สร้าง 3 ตารางโดยมีตาราง LivesAt อยู่ตรงกลาง",
+            "B. ยุบรวมทั้งสองเอนทิตีเข้าเป็น 1 ตารางเดียว (Combine entities into one relation) โดยเลือก PK ฝั่งหนึ่งเป็น PK หลัก และอีกฝั่งเป็น Alternate Key",
+            "C. แยกเป็น 2 ตารางและห้ามมี Foreign Key เชื่อมหากัน",
+            "D. แปลงให้กลายเป็นความสัมพันธ์แบบ Many-to-Many",
+            "E. สร้างเฉพาะตาราง Address ส่วนตาราง Staff ให้ลบทิ้ง"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 5 หน้า 13 และบทที่ 6 หน้า 2: หากเป็น 1:1 แบบ Mandatory ทั้งสองฝั่ง ให้ยุบรวมทั้งสองเอนทิตีเข้าด้วยกันเป็นตารางเดียว"
+    },
+    {
+        id: 38, cat: "ER & EER",
+        q: "จาก ER Diagram ของฐานข้อมูล COMPANY ใน Week 6 ความสัมพันธ์ `Manages` (แบบ 1:1 ระหว่าง Employee กับ Department) มีแอตทริบิวต์ของความสัมพันธ์ชื่อ `startDate` เกาะอยู่บนเส้น เมื่อแปลงเป็นตารางแล้ว คอลัมน์ `startDate` จะต้องไปอยู่ในตารางใด และเพราะเหตุใด?",
+        options: [
+            "A. ไปอยู่ในตาราง Employee เพราะพนักงานทุกคนมีวันเริ่มงาน",
+            "B. ต้องสร้างตารางใหม่ชื่อ Manages เพื่อเก็บ startDate โดยเฉพาะ",
+            "C. ไปอยู่ในตาราง Department เพราะ Foreign Key (mgr_ssn) ถูกวางไว้ที่ตาราง Department (Foreign Key อยู่ฝั่งไหน แอตทริบิวต์ของความสัมพันธ์จะไปอยู่ฝั่งเดียวกับ Foreign Key)",
+            "D. ไปอยู่ในตาราง Project",
+            "E. ไม่ต้องนำมาสร้างเป็นคอลัมน์เพราะเป็นแอตทริบิวต์บนเส้นประ"
+        ],
+        ans: 2,
+        exp: "จากสคริปต์อาจารย์ Week 6: ความสัมพันธ์ Manages ไม่ต้องสร้างตารางกลาง และหลักการคือ 'Foreign Key อยู่ฝั่งไหน แอตทริบิวต์ที่เกิดจากความสัมพันธ์ (startDate) ก็จะไปอยู่ฝั่งเดียวกันกับ Foreign Key' ซึ่งก็คือตาราง Department"
+    },
+    {
+        id: 39, cat: "ER & EER",
+        q: "เมื่อแปลง Multi-valued Attribute เช่น `telNo [1..*]` ของตาราง `Staff(staffNo, fName, lName)` ไปเป็น Logical Design ข้อใดถูกต้อง?",
+        options: [
+            "A. สร้างคอลัมน์ telNo1, telNo2, telNo3 ในตาราง Staff",
+            "B. สร้างตารางใหม่ `StaffTelephone(staffNo, telNo)` โดยมีเฉพาะ `staffNo` ตัวเดียวเป็น Primary Key",
+            "C. สร้างตารางใหม่ `StaffTelephone(staffNo, telNo)` โดยมี רק `telNo` ตัวเดียวเป็น Primary Key",
+            "D. สร้างตารางใหม่ `StaffTelephone(staffNo, telNo)` โดยมี `(staffNo, telNo)` ร่วมกันเป็น Composite Primary Key และ `staffNo` เป็น Foreign Key ชี้ไปที่ `Staff`",
+            "E. เก็บเบอร์โทรทั้งหมดรวมกันในคอลัมน์เดียวด้วยชนิดข้อมูล TEXT"
+        ],
+        ans: 3,
+        exp: "จากสไลด์บทที่ 5 หน้า 22 และบทที่ 6 หน้า 6: Multi-valued attribute ต้องแยกเป็นตารางใหม่ โดยนำ PK ของตารางหลักมาเป็น FK และใช้ (PK ของตารางหลัก + แอตทริบิวต์หลายค่านั้น) รวมกันเป็น Composite PK"
+    },
+    {
+        id: 40, cat: "ER & EER",
+        q: "ในการใช้โปรแกรม MySQL Workbench วาดแผนภาพ EER Diagram ข้อใดอธิบายความแตกต่างระหว่างการใช้ 'เส้นประ (Dashed line)' กับ 'เส้นทึบ (Solid line)' ได้ถูกต้องตามที่อาจารย์เน้นย้ำใน Week 6?",
+        options: [
+            "A. เส้นประใช้สำหรับความสัมพันธ์ 1:1 เท่านั้น ส่วนเส้นทึบใช้สำหรับ 1:N เท่านั้น",
+            "B. เส้นประใช้สำหรับความสัมพันธ์ปกติทั่วไป (Non-identifying relationship ที่ FK ไม่ได้เป็นส่วนหนึ่งของ PK ในตารางลูก) ส่วนเส้นทึบใช้สำหรับ Identifying relationship (เช่น Weak Entity หรือตารางกลาง M:N ที่ FK เข้าไปเป็นส่วนหนึ่งของ PK)",
+            "C. เส้นประหมายถึงไม่ต้องสร้าง Foreign Key ส่วนเส้นทึบหมายถึงต้องสร้าง Foreign Key",
+            "D. เส้นทึบใช้สำหรับความสัมพันธ์แบบ Self-reference (Recursive) เท่านั้น",
+            "E. ใช้แทนกันได้ทั้งหมดไม่มีผลต่อคอลัมน์ที่โปรแกรมสร้างให้"
+        ],
+        ans: 1,
+        exp: "จากสคริปต์อาจารย์ Week 6: ใน MySQL Workbench ความสัมพันธ์ปกติ (รวมถึง Self-reference ในข้อ 1 และข้อ 2) ต้องใช้เส้นประ (1:n non-identifying) เท่านั้น ถ้าวาดเส้นทึบคือผิด เพราะเส้นทึบจะดึง FK เข้าไปเป็น PK ของตารางลูกซึ่งใช้กับ Weak entity หรือ M:N"
+    },
+    {
+        id: 41, cat: "ER & EER",
+        q: "กระบวนการในการออกแบบ EER ที่เริ่มต้นจากเอนทิตีหลัก (Superclass) แล้วทำการแยกย่อยออกเป็นกลุ่มย่อยๆ (Subclasses) โดยพิจารณาจากลักษณะเฉพาะที่แตกต่างกัน (Maximizing the differences) เรียกว่าอะไร?",
+        options: [
+            "A. Generalization",
+            "B. Specialization",
+            "C. Normalization",
+            "D. Aggregation",
+            "E. Denormalization"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 6 หน้า 12: Specialization คือกระบวนการขยายความแตกต่างของสมาชิกในเอนทิตีเพื่อแยกเป็น Subclasses (Top-down) ส่วน Generalization คือการลดความแตกต่างเพื่อรวบเป็น Superclass (Bottom-up)"
+    },
+    {
+        id: 42, cat: "ER & EER",
+        q: "ในแผนภาพ EER ของพนักงาน `Staff` ที่แยกย่อยตามสัญญาจ้างเป็น `FullTimePermanent` และ `PartTimeTemporary` โดยระบุเงื่อนไขกำกับไว้ว่า `{Mandatory, Or}` ข้อใดแปลความหมายได้ถูกต้อง?",
+        options: [
+            "A. พนักงานหนึ่งคนไม่จำเป็นต้องมีสัญญาจ้างก็ได้ แต่ถ้ามีสามารถเป็นได้ทั้ง Full-time และ Part-time พร้อมกัน",
+            "B. พนักงานทุกคนต้องมีสัญญาจ้างอย่างน้อย 1 ประเภท และสามารถเป็นทั้ง Full-time และ Part-time พร้อมกันได้",
+            "C. พนักงานทุกคนต้องอยู่ในกลุ่มสัญญาจ้างกลุ่มใดกลุ่มหนึ่งเสมอ และสามารถเป็นได้เพียงแค่ Full-time หรือ Part-time อย่างใดอย่างหนึ่งเท่านั้น (ห้ามเป็นทั้งสองอย่างพร้อมกัน)",
+            "D. พนักงานหนึ่งคนไม่ต้องเป็นสมาชิกของ Superclass Staff",
+            "E. ตารางสัญญาจ้างไม่มีการสืบทอด Primary Key จาก Staff"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 6 หน้า 15-17: Mandatory แปลว่าสมาชิกทุกตัวใน Superclass ต้องเข้าร่วมใน Subclass อย่างน้อยหนึ่งตัว ส่วน Or (Disjoint) แปลว่าเป็นสมาชิกของ Subclass ได้เพียงตัวเดียวเท่านั้น ห้ามซ้อนทับกัน"
+    },
+    {
+        id: 43, cat: "ER & EER",
+        q: "ตามแนวทางการแปลง Superclass/Subclass ไปเป็นตาราง (Logical Design) หากความสัมพันธ์ระหว่าง `Owner` (Superclass) กับ `PrivateOwner` และ `BusinessOwner` (Subclasses) มีเงื่อนไขเป็น `{Mandatory, Disjoint (Or)}` จะต้องแปลงเป็นกี่ตาราง และมีโครงสร้างอย่างไร?",
+        options: [
+            "A. 1 ตารางเดียวชื่อ AllOwner ที่รวมทุกคอลัมน์ไว้ด้วยกัน",
+            "B. 2 ตาราง คือตาราง PrivateOwner และตาราง BusinessOwner โดยแต่ละตารางได้สืบทอดคอลัมน์และ PK ของ Owner ลงไปรวมไว้ในตัวเองเลย (ไม่มีตาราง Owner แยก)",
+            "C. 3 ตาราง คือ Owner, PrivateOwner, และ BusinessOwner",
+            "D. 2 ตาราง คือ Owner และ OwnerDetails",
+            "E. 4 ตาราง โดยมีตารางกลางเชื่อมระหว่าง PrivateOwner กับ BusinessOwner"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 6 หน้า 24, 26-27 (Option 3 - Mandatory, Disjoint {Or}) และคำอธิบายของอาจารย์ใน Week 7 ข้อ 2: เมื่อเป็น Mandatory (ทุกคนต้องเป็นลูกตัวใดตัวหนึ่ง) และ Disjoint (ห้ามเป็นซ้ำกัน) จึงยุบรวมคอลัมน์ของตัวแม่ลงไปอยู่ในตารางลูกแต่ละตัวได้เลย เหลือแค่ 2 ตาราง"
+    },
+    {
+        id: 44, cat: "ER & EER",
+        q: "หากความสัมพันธ์ระหว่าง Superclass และ Subclasses (ที่มี 2 Subclasses) มีเงื่อนไขเป็น `{Optional, Disjoint (Or)}` ตามแนวทางมาตรฐาน (Option 4) จะต้องแปลงออกมาได้ทั้งหมดกี่ตาราง?",
+        options: [
+            "A. 1 ตาราง (รวมทุกอย่างไว้ในตารางเดียว)",
+            "B. 2 ตาราง (ตารางลูก 2 ตารางเท่านั้น)",
+            "C. 3 ตาราง (1 ตารางสำหรับ Superclass และอีก 2 ตารางสำหรับแต่ละ Subclass)",
+            "D. 4 ตาราง",
+            "E. 5 ตาราง"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 6 หน้า 25-27 (Option 4 - Optional, Disjoint {Or}): ต้องสร้าง 1 ตารางสำหรับ Superclass และสร้างตารางแยกสำหรับแต่ละ Subclass (รวมเป็น 1 + 2 = 3 ตาราง)"
+    },
+
+    // PART 5: Normalization (45-56)
+    {
+        id: 45, cat: "Normalization",
+        q: "ตาราง `StaffBranch(staffNo, sName, position, salary, branchNo, bAddress)` มีการเก็บที่อยู่สาขา (`bAddress`) ซ้ำๆ กันในพนักงานทุกคนที่อยู่สาขาเดียวกัน หากพนักงานรหัส SA9 ซึ่งเป็นพนักงานคนเดียวของสาขา B007 ลาออกและเราทำการลบแถวของ SA9 ทิ้ง ส่งผลให้ข้อมูลที่อยู่ของสาขา B007 สูญหายไปจากระบบด้วย ปัญหานี้เรียกว่าอะไร?",
+        options: [
+            "A. Insertion Anomaly",
+            "B. Deletion Anomaly",
+            "C. Modification (Update) Anomaly",
+            "D. Domain Violation Anomaly",
+            "E. Entity Integrity Anomaly"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 7 หน้า 8-9: การลบข้อมูลของเอนทิตีหนึ่ง (พนักงานคนสุดท้ายของสาขา) แล้วทำให้ข้อมูลของอีกเอนทิตีหนึ่ง (ข้อมูลสาขา B007) หายไปด้วยโดยไม่ตั้งใจ เรียกว่า Deletion Anomaly"
+    },
+    {
+        id: 46, cat: "Normalization",
+        q: "ใน Functional Dependency ที่เขียนในรูป $A \rightarrow B$ ข้อใดกล่าวถูกต้อง?",
+        options: [
+            "A. $B$ คือ Determinant ของ $A$",
+            "B. ค่าของ $B$ หนึ่งค่า จะระบุค่าของ $A$ ได้เพียงค่าเดียวเสมอ",
+            "C. $A$ คือ Determinant (ตัวกำหนด) และ $B$ ขึ้นต่อกันเชิงฟังก์ชันกับ $A$ (แต่ละค่าของ $A$ จะสัมพันธ์กับค่าของ $B$ เพียงหนึ่งค่าเท่านั้น)",
+            "D. $A$ และ $B$ ต้องเป็น Foreign Key ทั้งคู่",
+            "E. ความสัมพันธ์นี้เกิดขึ้นเฉพาะข้อมูลตัวอย่างบางช่วงเวลา ไม่จำเป็นต้องเป็นจริงตลอดไป"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 7 หน้า 11-13: ใน $A \rightarrow B$ ตัวซ้ายมือ ($A$) เรียกว่า Determinant ซึ่งเป็นตัวกำหนดค่าของ $B$ โดยแต่ละค่าของ $A$ จะให้ค่าของ $B$ เพียงค่าเดียวเสมอ และต้องเป็นจริงตลอดเวลา (Holds for all time)"
+    },
+    {
+        id: 47, cat: "Normalization",
+        q: "กำหนดให้ตาราง Sample มีแอตทริบิวต์ A, B, C, D, E และมี Functional Dependencies ดังนี้: (fd1) $A \rightarrow C$, (fd2) $C \rightarrow A$, (fd3) $B \rightarrow D$, และ (fd4) $A, B \rightarrow E$ ข้อใดคือ Primary Key ของตาราง Sample นี้?",
+        options: [
+            "A. A เพียงตัวเดียว",
+            "B. B เพียงตัวเดียว",
+            "C. (A, B) ร่วมกัน (หรือ (C, B) เป็น Candidate Key)",
+            "D. E เพียงตัวเดียว",
+            "E. (C, D) ร่วมกัน"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 7 หน้า 37: ตัวกำหนด (Determinant) ที่สามารถระบุค่าของแอตทริบิวต์อื่นๆ ได้ครบทุกตัวในตารางคือ (A, B) เพราะรู้ A รู้ C, รู้ B รู้ D, และรู้ทั้ง A, B รู้ E"
+    },
+    {
+        id: 48, cat: "Normalization",
+        q: "การแปลงตารางจาก Unnormalized Form (UNF) ไปเป็น First Normal Form (1NF) ต้องขจัดสิ่งใดออกไป?",
+        options: [
+            "A. Partial dependencies",
+            "B. Transitive dependencies",
+            "C. Repeating groups (หรือ Multi-valued attributes ที่ทำให้ช่องตารางไม่ได้เก็บค่าเดี่ยว)",
+            "D. Foreign keys ทั้งหมด",
+            "E. Candidate keys ที่ซ้อนทับกัน"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 7 หน้า 41-45: การแปลงจาก UNF เป็น 1NF คือการ Remove repeating groups เพื่อให้จุดตัดของแต่ละแถวและคอลัมน์มีค่าเพียงค่าเดียว (Atomic value)"
+    },
+    {
+        id: 49, cat: "Normalization",
+        q: "ตาราง `ClientRental(clientNo, propertyNo, cName, pAddress, rentStart, rentFinish, rent, ownerNo, oName)` มี Primary Key คือ `(clientNo, propertyNo)` และมี Functional Dependency คือ `clientNo -> cName` ความสัมพันธ์ `clientNo -> cName` นี้ทำให้ตารางละเมิด Normal Form ระดับใด และเรียกว่า Dependency ประเภทใด?",
+        options: [
+            "A. ละเมิด 1NF เพราะเป็น Repeating group",
+            "B. ละเมิด 2NF เพราะเป็น Partial dependency (cName ขึ้นกับแค่บางส่วนของ Composite Primary Key)",
+            "C. ละเมิด 3NF เพราะเป็น Transitive dependency",
+            "D. ละเมิดเฉพาะ BCNF เท่านั้น",
+            "E. ไม่ได้ละเมิดกฎใดๆ ตารางอยู่ในรูป 3NF แล้ว"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 7 หน้า 51-52: เนื่องจาก PK คือ (clientNo, propertyNo) แต่ cName ซึ่งเป็น Non-prime attribute ขึ้นอยู่กับแค่ clientNo เพียงตัวเดียว จึงเป็น Partial dependency ทำให้ละเมิด 2NF"
+    },
+    {
+        id: 50, cat: "Normalization",
+        q: "เมื่อตารางอยู่ในรูป First Normal Form (1NF) อยู่แล้ว กรณีใดที่ตารางนั้นจะมีสถานะเป็น Second Normal Form (2NF) โดยอัตโนมัติทันทีโดยไม่ต้องแยกตารางเพิ่ม?",
+        options: [
+            "A. เมื่อตารางนั้นไม่มี Foreign Key เลย",
+            "B. เมื่อตารางนั้นมี Primary Key เป็นแอตทริบิวต์เดี่ยว (Single-attribute Primary Key)",
+            "C. เมื่อตารางนั้นมีคอลัมน์มากกว่า 10 คอลัมน์",
+            "D. เมื่อตารางนั้นมี Transitive Dependency อยู่ภายใน",
+            "E. เมื่อตารางนั้นมี Composite Primary Key ที่ประกอบด้วย 3 คอลัมน์"
+        ],
+        ans: 1,
+        exp: "เนื่องจาก Partial Dependency จะเกิดขึ้นได้ก็ต่อเมื่อคีย์หลักเป็นคีย์ผสม (Composite PK) แล้วมีแอตทริบิวต์ไปขึ้นกับ 'บางส่วน' ของคีย์หลักเท่านั้น หาก PK มีแค่คอลัมน์เดี่ยว จึงไม่มีทางเกิด Partial Dependency บน PK ได้เลย"
+    },
+    {
+        id: 51, cat: "Normalization",
+        q: "ในตาราง `PropertyOwner(propertyNo, pAddress, rent, ownerNo, oName)` ซึ่งมี Primary Key คือ `propertyNo` มี FD คือ `propertyNo -> pAddress, rent, ownerNo, oName` และ `ownerNo -> oName` เหตุใดตารางนี้จึงยังไม่เป็น Third Normal Form (3NF)?",
+        options: [
+            "A. เพราะมี Repeating group ในคอลัมน์ pAddress",
+            "B. เพราะมี Partial dependency บนคีย์หลัก",
+            "C. เพราะมี Transitive dependency คือ `propertyNo -> ownerNo` และ `ownerNo -> oName` (Non-prime attribute ไปกำหนด Non-prime attribute อีกทอดหนึ่ง)",
+            "D. เพราะ ownerNo เป็น Candidate Key ของตารางนี้",
+            "E. เพราะตารางนี้ไม่มี Primary Key"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 7 หน้า 57: oName (Non-prime attribute) ขึ้นต่อกันแบบส่งทอด (Transitive dependency) กับ propertyNo ผ่านทาง ownerNo จึงต้องแยก Owner(ownerNo, oName) ออกไปเพื่อให้เป็น 3NF"
+    },
+    {
+        id: 52, cat: "Normalization",
+        q: "จากใบงาน Lab 08 ตาราง `PatientMedication` มี 13 คอลัมน์ และมี FD ดังนี้:\nfd1: `PatientNumber -> FullName, WardNumber, WardName, BedNumber`\nfd2: `WardNumber -> WardName`\nfd3: `DrugNumber -> Name, Description, Dosage, MethodOfAdmin`\nfd4: `PatientNumber, DrugNumber, StartDate -> UnitsPerDay, FinishDate` (PK)\nเมื่อทำการ Normalize จนถึงระดับ 3NF แล้ว จะได้ตารางทั้งหมดกี่ตาราง และมีตารางใดบ้าง?",
+        options: [
+            "A. 2 ตาราง: Patient และ Drug",
+            "B. 3 ตาราง: Patient, Drug, และ PatientMedication",
+            "C. 4 ตาราง: Patient, Ward, Drug, และ PatientMedication",
+            "D. 5 ตาราง: Patient, Ward, Bed, Drug, และ PatientMedication",
+            "E. 6 ตาราง"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 8 หน้า 3-6 (Lab08 Solution): ตอนทำ 2NF แยกออกเป็น 3 ตารางคือ Patient, Drug, PatientMedication และตอนทำ 3NF แยก fd2 (WardNumber -> WardName) ออกจาก Patient เป็นตาราง Ward รวมได้ 4 ตาราง"
+    },
+    {
+        id: 53, cat: "Normalization",
+        q: "ข้อใดคือนิยามที่ถูกต้องของ Boyce-Codd Normal Form (BCNF)?",
+        options: [
+            "A. ตารางที่ไม่มี Multi-valued attributes",
+            "B. ตารางที่ทุกๆ Non-prime attribute ขึ้นกับส่วนหนึ่งของ Primary Key",
+            "C. ตารางที่ในทุกๆ Functional Dependency ($X \rightarrow Y$) ตัวกำหนดฝั่งซ้ายมือ (Determinant $X$) จะต้องเป็น Candidate Key เสมอ",
+            "D. ตารางที่อนุญาตให้ $A \rightarrow B$ อยู่ได้แม้ $A$ ไม่ใช่ Candidate Key หาก $B$ เป็น Prime attribute",
+            "E. ตารางที่ผ่านการรวมตาราง (Denormalization) เพื่อเพิ่มความเร็ว"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 8 หน้า 14: 'A relation is in BCNF if and only if every determinant is a candidate key.'"
+    },
+    {
+        id: 54, cat: "Normalization",
+        q: "ตามที่อาจารย์อธิบายอย่างละเอียดใน Week 9: สมมติตาราง `DeliverySchedule(driver_id, delivery_date, time_slot, vehicle_id, zone_code)` มี Candidate Keys 2 ตัวคือ:\nCK1 (PK): `(driver_id, delivery_date, time_slot)`\nCK2: `(vehicle_id, delivery_date, time_slot)`\nและมี FD3 คือ `driver_id -> vehicle_id` เหตุใด FD3 จึง **ไม่ถือว่าละเมิดกฎ 3NF** แต่ไป **ละเมิดกฎ BCNF** แทน?",
+        options: [
+            "A. เพราะ vehicle_id เป็นส่วนหนึ่งของ Candidate Key (เป็น Prime attribute ไม่ใช่ Non-prime attribute) จึงไม่เข้าข่ายละเมิด 3NF แต่ละเมิด BCNF เพราะฝั่งซ้าย (driver_id ตัวเดียว) ไม่ใช่ Candidate Key",
+            "B. เพราะ driver_id เป็น Candidate Key ของตารางนี้อยู่แล้ว",
+            "C. เพราะตารางนี้ยังไม่ได้เป็น 1NF",
+            "D. เพราะ zone_code เป็นตัวกำหนด driver_id",
+            "E. เพราะ 3NF มีความเข้มงวดมากกว่า BCNF"
+        ],
+        ans: 0,
+        exp: "จากสคริปต์อาจารย์ Week 9 และสไลด์บทที่ 8 หน้า 15: กฎ 2NF และ 3NF จะละเมิดก็ต่อเมื่อตัวขวามือเป็น Non-prime attribute เท่านั้น ในที่นี้ vehicle_id เป็นส่วนหนึ่งของคีย์ (Prime attribute) จึงผ่าน 3NF แต่ตกที่ BCNF เพราะ driver_id ตัวเดียวไม่ใช่ Candidate Key!"
+    },
+    {
+        id: 55, cat: "Normalization",
+        q: "ต่อเนื่องจากข้อ 54: เมื่อเราแยก `FD3: driver_id -> vehicle_id` ออกมาจากตาราง `DeliverySchedule` เพื่อทำเป็น BCNF แล้วพบว่าในขั้นตอน 2NF ก่อนหน้านี้เราเคยแยกตาราง `Driver(driver_id, driver_name)` ออกมาไว้แล้ว อาจารย์แนะนำให้จัดการอย่างไร?",
+        options: [
+            "A. ต้องสร้างเป็นตารางใหม่แยกต่างหากชื่อ DriverVehicle ห้ามรวมกันเด็ดขาด",
+            "B. นำ `vehicle_id` ไปยุบรวม (Merge) เข้ากับตาราง `Driver` เดิมได้เลย (เป็น `Driver(driver_id, driver_name, vehicle_id)`) เพราะมี Determinant ตัวเดียวกันคือ `driver_id`",
+            "C. ลบคอลัมน์ vehicle_id ทิ้งออกจากระบบทั้งหมด",
+            "D. นำ driver_name กลับไปใส่ในตาราง DeliverySchedule",
+            "E. เปลี่ยน Primary Key ของตาราง Driver เป็น vehicle_id"
+        ],
+        ans: 1,
+        exp: "จากสคริปต์อาจารย์ Week 9: เนื่องจาก FD1 (driver_id -> driver_name) และ FD3 (driver_id -> vehicle_id) มี Determinant ตัวเดียวกันคือ driver_id จึงไม่ควรแยกตารางซ้ำซ้อน แต่ให้นำมายุบรวมอยู่ในตาราง Driver ตารางเดียวได้เลย"
+    },
+    {
+        id: 56, cat: "Normalization",
+        q: "ข้อใดกล่าวถูกต้องเกี่ยวกับความสัมพันธ์ระหว่าง 3NF และ BCNF?",
+        options: [
+            "A. ทุกตารางที่เป็น 3NF จะต้องเป็น BCNF เสมอ",
+            "B. ทุกตารางที่เป็น BCNF จะเป็น 3NF เสมอ แต่ตารางที่เป็น 3NF อาจไม่เป็น BCNF ก็ได้",
+            "C. ตารางที่เป็น BCNF จะไม่เป็น 2NF",
+            "D. 3NF และ BCNF มีเงื่อนไขเหมือนกันทุกประการ",
+            "E. ตารางที่มี Candidate Key เพียงตัวเดียวที่เป็นคอลัมน์เดี่ยว ถ้าเป็น 3NF แล้วจะไม่มีทางเป็น BCNF"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 8 หน้า 8 และ 15: BCNF เป็นวงในที่เข้มงวดกว่า 3NF ดังนั้น 'Every relation in BCNF is also in 3NF. However, a relation in 3NF is not necessarily in BCNF.'"
+    },
+
+    // PART 6: 15 Design Mistakes & Lab 10 (57-70)
+    {
+        id: 57, cat: "Design Mistakes & DDL",
+        q: "[Review Case 1] นักศึกษาออกแบบตารางเก็บแนวเพลงของศิลปินเป็น `ARTIST(ArtistID, Name, Genre1, Genre2, Genre3)` หรือเก็บเป็น `Genres = 'Jazz, Soul, Funk'` ข้อใดคือวิธีแก้ไขที่ถูกต้องตามหลักการออกแบบฐานข้อมูล?",
+        options: [
+            "A. เพิ่มคอลัมน์เป็น Genre1 ถึง Genre10 เผื่อไว้",
+            "B. แยกออกเป็นตารางใหม่ `ARTIST_GENRE(ArtistID, Genre)` โดยใช้ `(ArtistID, Genre)` ร่วมกันเป็น Primary Key และ `ArtistID` เป็น Foreign Key",
+            "C. เปลี่ยนชนิดข้อมูลของ Genres เป็น JSON หรือ BLOB",
+            "D. ใช้ Genre เป็น Primary Key ของตาราง ARTIST",
+            "E. สร้างตารางแยกตามชื่อแนวเพลง เช่น ตาราง JAZZ, ตาราง ROCK"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 9 Case 1 (Fix 1): แอตทริบิวต์ที่มีหลายค่า (Multivalued attribute [0..*]) ต้องแยกเป็นตารางใหม่ที่มี PK คือคีย์ของตารางหลักรวมกับค่าของแอตทริบิวต์นั้น"
+    },
+    {
+        id: 58, cat: "Design Mistakes & DDL",
+        q: "[Review Case 2] ในระบบสร้างเพลย์ลิสต์เพลง การเก็บคอลัมน์ `SongCount` (จำนวนเพลงในเพลย์ลิสต์) และ `TotalMinutes` (เวลารวมของเพลงทั้งหมด) ไว้ในตาราง `PLAYLIST` ก่อให้เกิดปัญหาข้อมูลไม่ตรงกับจำนวนเพลงจริงเมื่อมีการเพิ่มหรือลบเพลง ควรแก้ไขอย่างไร?",
+        options: [
+            "A. ตั้งค่าคอลัมน์ SongCount ให้เป็น AUTO_INCREMENT",
+            "B. ไม่ต้องเก็บคอลัมน์ทั้งสองในตาราง PLAYLIST เพราะเป็น Derived Attributes แต่ให้คำนวณด้วยคำสั่ง SELECT (COUNT และ SUM) หรือสร้างเป็น VIEW แทน",
+            "C. ย้ายคอลัมน์ SongCount ไปไว้ในตาราง SONG แทน",
+            "D. กำหนดให้ SongCount เป็น Primary Key",
+            "E. ตั้งค่า ON DELETE SET NULL ให้กับคอลัมน์ TotalMinutes"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 9 Case 2 (Fix 2): A derived attribute (/name in UML) is computed with a query or a VIEW, not stored as a column."
+    },
+    {
+        id: 59, cat: "Design Mistakes & DDL",
+        q: "[Review Case 5] สูตรอาหาร 1 สูตร (`RECIPE`) ใช้วัตถุดิบ (`INGREDIENT`) หลายชนิด และวัตถุดิบ 1 ชนิดอยู่ในสูตรอาหารได้หลายสูตร โดยแต่ละสูตรใช้ปริมาณวัตถุดิบ (`Quantity`) ไม่เท่ากัน (เช่น แพนเค้กใช้แป้ง 200g แต่ขนมปังใช้แป้ง 500g) คอลัมน์ `Quantity` ควรนำไปเก็บไว้ที่ตารางใด?",
+        options: [
+            "A. เก็บไว้ในตาราง INGREDIENT",
+            "B. เก็บไว้ในตาราง RECIPE",
+            "C. เก็บไว้ในตารางกลาง `RECIPE_INGREDIENT(RecipeID, IngredientID, Quantity)` เพราะปริมาณขึ้นอยู่กับทั้งรหัสสูตรและรหัสวัตถุดิบร่วมกัน",
+            "D. สร้างตาราง QUANTITY แยกต่างหากโดยไม่มี Foreign Key",
+            "E. ไม่ต้องเก็บลงฐานข้อมูลเพราะเป็น Derived Attribute"
+        ],
+        ans: 2,
+        exp: "จากสไลด์บทที่ 9 Case 5 (Fix 5): Quantity ขึ้นอยู่กับทั้งสองฝั่ง (RecipeID, IngredientID) -> Quantity จึงเป็นแอตทริบิวต์ของความสัมพันธ์ (Association class) ต้องอยู่ในตารางกลาง RECIPE_INGREDIENT"
+    },
+    {
+        id: 60, cat: "Design Mistakes & DDL",
+        q: "[Review Case 6] ระบบสตรีมมิงกำหนดว่า บัญชีผู้ใช้ (`ACCOUNT`) สามารถเป็น Creator (มีชื่อช่อง), เป็นสมาชิก Premium (มีวันหมดอายุ), เป็นทั้งสองอย่างพร้อมกัน (Both), หรือไม่เป็นทั้งสองอย่างเลยก็ได้ (Neither - เป็นผู้ชมฟรี) ข้อใดระบุ Constraint ของ Specialization/Generalization ได้ตรงตามความต้องการนี้?",
+        options: [
+            "A. {Mandatory, Disjoint (Or)}",
+            "B. {Mandatory, Nondisjoint (And)}",
+            "C. {Optional, Disjoint (Or)}",
+            "D. {Optional, Nondisjoint (And)}",
+            "E. {Recursive, Identifying}"
+        ],
+        ans: 3,
+        exp: "จากสไลด์บทที่ 9 Case 6 (Fix 6): คำว่า 'Neither' (ไม่เป็นเลยก็ได้) = Optional และคำว่า 'Both' (เป็นทั้งสองอย่างพร้อมกันได้) = Nondisjoint (AND)"
+    },
+    {
+        id: 61, cat: "Design Mistakes & DDL",
+        q: "[Review Case 7 & 8] ข้อใดเป็นหลักการเลือก Primary Key ที่ถูกต้องสำหรับตารางประวัติการเข้าพักโรงแรม `STAY` (ซึ่งแขกคนเดิม `GuestID` สามารถกลับมาพักห้องเดิม `RoomNo` ในวันเช็คอิน `CheckIn` ครั้งใหม่ได้)?",
+        options: [
+            "A. ใช้ `(GuestID, RoomNo)` เป็น Primary Key เพียง 2 คอลัมน์",
+            "B. ใช้ `CheckOut` เป็น Primary Key เพราะมีค่าเป็น NULL ตอนเช็คอิน",
+            "C. ใช้เบอร์โทรศัพท์ของแขกเป็น Primary Key เพราะเปลี่ยนบ่อย",
+            "D. เพิ่ม `CheckIn` เข้าไปใน Composite PK เป็น `(GuestID, RoomNo, CheckIn)` หรือใช้ Surrogate Key เช่น `StayID` เป็น PK",
+            "E. ใช้ `RoomNo` เพียงคอลัมน์เดียวเป็น Primary Key"
+        ],
+        ans: 3,
+        exp: "จากสไลด์บทที่ 9 Case 8 (Fix 8): เหตุการณ์ที่เกิดขึ้นซ้ำได้ตามกาลเวลา (Repeatable events) หากใช้แค่ (GuestID, RoomNo) จะบล็อกการเข้าพักซ้ำ ต้องเพิ่มวันที่ CheckIn เข้าไปใน PK หรือใช้ Surrogate key (StayID)"
+    },
+    {
+        id: 62, cat: "Design Mistakes & DDL",
+        q: "[Review Case 11] ร้านกาแฟมีการปรับราคาเมนู (`MENU_ITEM`) อยู่เสมอ แต่ใบเสร็จรับเงินทุกใบในอดีตจะต้องยังคงแสดงราคาที่ลูกค้าจ่ายจริง ณ วันที่ซื้อ แม้เวลาจะผ่านไปหลายปีแล้วก็ตาม ควรออกแบบฐานข้อมูลอย่างไร?",
+        options: [
+            "A. เก็บเฉพาะ CurrentPrice ไว้ในตาราง MENU_ITEM ที่เดียว แล้วใช้ JOIN คำนวณใบเสร็จเสมอ",
+            "B. เก็บทั้ง `CurrentPrice` ไว้ใน `MENU_ITEM` (สำหรับขายใหม่) และคัดลอกราคาขายจริง ณ ตอนนั้นไปเก็บไว้ในคอลัมน์ `UnitPrice` ของตาราง `SALE_ITEM(SaleNo, ItemID, Qty, UnitPrice)`",
+            "C. ห้ามร้านกาแฟเปลี่ยนราคาสินค้าในตาราง MENU_ITEM เด็ดขาด",
+            "D. ลบใบเสร็จเก่าทิ้งทุกครั้งที่มีการปรับราคาสินค้า",
+            "E. เก็บราคาไว้ในตารางลูกค้าแทน"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 9 Case 11 (Fix 11): การเก็บ UnitPrice ใน SALE_ITEM ไม่ใช่การเก็บข้อมูลซ้ำซ้อนที่ผิด แต่เป็นคนละความจริงกัน: CurrentPrice ขึ้นกับ ItemID (ราคาตอนนี้) ส่วน UnitPrice ขึ้นกับ (SaleNo, ItemID) (ราคาที่ขายจริงในบิลนั้น)"
+    },
+    {
+        id: 63, cat: "Design Mistakes & DDL",
+        q: "[Review Case 13] บริษัทค่ายมือถือต้องการทราบว่าลูกค้าแต่ละรายใช้แพ็กเกจใดในเดือนใดๆ ในอดีตเพื่อตรวจสอบบิลย้อนหลังได้ แทนที่จะใช้คำสั่ง UPDATE ทับรหัสแพ็กเกจเดิมในตาราง `SUBSCRIBER` ควรออกแบบอย่างไร?",
+        options: [
+            "A. สร้างตารางประวัติแยกออกมา เช่น `SUBSCRIPTION(SubscriberID, StartDate, PackageID, EndDate)` โดยเก็บการเปลี่ยนแพ็กเกจแต่ละครั้งเป็น 1 แถว",
+            "B. สร้างคอลัมน์ Package1, Package2, Package3 ในตาราง SUBSCRIBER",
+            "C. ใช้คำสั่ง DELETE ลบลูกค้าแล้วสร้างรหัสลูกค้าใหม่ทุกเดือน",
+            "D. เก็บชื่อแพ็กเกจทั้งหมดต่อกันในคอลัมน์ VARCHAR เดียว",
+            "E. ใช้คอลัมน์ updated_at ในตาราง SUBSCRIBER เพียงอย่างเดียวก็สามารถรู้ชื่อแพ็กเกจเมื่อ 2 ปีก่อนได้"
+        ],
+        ans: 0,
+        exp: "จากสไลด์บทที่ 9 Case 13 (Fix 13): หากธุรกิจต้องการถามว่า 'ณ วันที่ X เคยเป็นค่าอะไร?' ห้ามใช้ UPDATE ทับค่าเดิม แต่ต้องแยกตาราง History เก็บเป็นแถวตามช่วงเวลา (StartDate, EndDate)"
+    },
+    {
+        id: 64, cat: "Design Mistakes & DDL",
+        q: "[Review Case 14] ในการสร้างตารางบันทึกการขายตั๋ว `TICKET_SALE` ข้อใดเลือกใช้ชนิดข้อมูล (Data Type) ใน MySQL 8.0 สำหรับเก็บ 'วันที่จัดงาน', 'ราคาตั๋ว (บาทและสตางค์)', และ 'จำนวนตั๋วที่ซื้อ' ได้เหมาะสมที่สุด?",
+        options: [
+            "A. EventDate VARCHAR(20), Price FLOAT, Qty VARCHAR(5)",
+            "B. EventDate DATE, Price DECIMAL(10,2), Qty INT",
+            "C. EventDate INT, Price DOUBLE, Qty CHAR(10)",
+            "D. EventDate TEXT, Price VARCHAR(10), Qty FLOAT",
+            "E. EventDate TIME, Price INT, Qty BOOLEAN"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 9 Case 14 (Fix 14): วันที่ต้องใช้ DATE (เพื่อให้เรียงลำดับและเช็คความถูกต้องได้), เงินต้องใช้ DECIMAL(p,s) (ห้ามใช้ FLOAT เพราะทศนิยมคลาดเคลื่อน เช่น 200.290005...), และจำนวนนับต้องใช้ INT"
+    },
+    {
+        id: 65, cat: "Design Mistakes & DDL",
+        q: "[Review Case 15] ฟิตเนสแห่งหนึ่งต้องการเก็บ 'รหัสสมาชิก 5 หลักที่มีเลข 0 นำหน้าได้ (เช่น 00412)', 'เบอร์โทรศัพท์มือถือ (เช่น 081-234-5678 หรือ +66 89 111 2222)' และ 'สถานะการเป็นสมาชิก (Active หรือไม่)' ควรเลือกใช้ชนิดข้อมูลใดตามลำดับ?",
+        options: [
+            "A. INT, INT, VARCHAR(10)",
+            "B. CHAR(5), VARCHAR(15), BOOLEAN",
+            "C. VARCHAR(255), DECIMAL(10,0), CHAR(255)",
+            "D. FLOAT, CHAR(5), INT",
+            "E. DATE, INT(10), TEXT"
+        ],
+        ans: 1,
+        exp: "จากสไลด์บทที่ 9 Case 15 (Fix 15) และคำสอนอาจารย์ Week 10: รหัสและเบอร์โทรไม่ได้ใช้คำนวณทางคณิตศาสตร์และมีเลข 0 นำหน้า ถ้าใช้ INT เลข 0 จะหายและเก็บเครื่องหมาย +/- ไม่ได้ ดังนั้นรหัสความยาวคงที่ 5 หลักใช้ CHAR(5), เบอร์โทรใช้ VARCHAR(15), และสถานะใช้ BOOLEAN"
+    },
+    {
+        id: 66, cat: "Design Mistakes & DDL",
+        q: "[Lab 10: CoSpace] จากแผนภาพ Conceptual Design ของตาราง `ROOM(roomCode, roomName, capacity, typeCode, typeName, hourlyRate, facilities [0..*])` และ Functional Dependencies:\nF3: `roomCode -> roomName, capacity, typeCode`\nF4: `typeCode -> typeName, hourlyRate`\nเมื่อทำ Normalization จาก UNF จนถึงระดับ 3NF ตาราง `ROOM` จะถูกแยกออกเป็นตารางใดบ้าง?",
+        options: [
+            "A. แยกเป็น 2 ตาราง คือ ROOM และ BOOKING",
+            "B. แยกเป็น 3 ตาราง คือ `ROOM_TYPE(typeCode, typeName, hourlyRate)`, `ROOM(roomCode, roomName, capacity, typeCode)`, และ `ROOM_FACILITY(roomCode, facility)`",
+            "C. แยกเป็น 2 ตาราง คือ `ROOM(roomCode, roomName, capacity, typeCode, typeName, hourlyRate)` และ `FACILITY(facility)`",
+            "D. ไม่ต้องแยกตารางเพราะอยู่ในรูป 3NF อยู่แล้ว",
+            "E. ยุบรวมเข้ากับตาราง MEMBER เป็นตารางเดียว"
+        ],
+        ans: 1,
+        exp: "จาก Lab 10 Task 1: 1) ขจัด facilities [0..*] เพื่อให้เป็น 1NF โดยแยกเป็นตาราง ROOM_FACILITY(roomCode, facility) 2) ขจัด Transitive dependency (F4: typeCode -> typeName, hourlyRate) เพื่อให้เป็น 3NF โดยแยกเป็นตาราง ROOM_TYPE(typeCode, typeName, hourlyRate)"
+    },
+    {
+        id: 67, cat: "Design Mistakes & DDL",
+        q: "[Lab 10: CoSpace] เมื่อได้โครงสร้างตารางทั้ง 5 ตาราง ได้แก่ `MEMBER`, `ROOM_TYPE`, `ROOM`, `ROOM_FACILITY`, และ `BOOKING` ข้อใดเรียงลำดับการสร้างตาราง (CREATE TABLE) และลำดับการลบตาราง (DROP TABLE) ได้ถูกต้องโดยไม่ติดปัญหา Foreign Key Constraint?",
+        options: [
+            "A. สร้าง BOOKING ก่อนตารางอื่นทั้งหมด และลบ MEMBER ก่อนตารางอื่นทั้งหมด",
+            "B. สร้าง ROOM ก่อน ROOM_TYPE และสร้าง BOOKING ก่อน MEMBER",
+            "C. ลำดับการสร้าง (CREATE): `MEMBER`, `ROOM_TYPE` -> `ROOM` -> `ROOM_FACILITY`, `BOOKING` | ลำดับการลบ (DROP): ลบ `BOOKING`, `ROOM_FACILITY` -> `ROOM` -> `ROOM_TYPE`, `MEMBER`",
+            "D. ลำดับการสร้างและลำดับการลบเหมือนกันทุกประการ คือสร้างและลบตารางลูกก่อนตารางแม่",
+            "E. สร้าง ROOM_FACILITY เป็นตารางแรกสุดเพราะมีคอลัมน์น้อยที่สุด"
+        ],
+        ans: 2,
+        exp: "จาก Lab 10 Task 3: กฎคือเวลา CREATE ต้องสร้างตารางแม่ (Parent: MEMBER, ROOM_TYPE) ก่อนตารางลูกที่อ้างอิงหาแม่ (ROOM ต้องรอ ROOM_TYPE, ส่วน BOOKING และ ROOM_FACILITY ต้องรอ ROOM) และเวลา DROP ต้องลบตารางลูกก่อนตารางแม่เสมอ"
+    },
+    {
+        id: 68, cat: "Design Mistakes & DDL",
+        q: "[Lab 10: CoSpace] จากข้อกำหนด BR7: 'A member, room, or room type that is still used cannot be deleted. Deleting a room also deletes its facility list.' ในการเขียนคำสั่ง FOREIGN KEY ต้องกำหนด `ON DELETE` อย่างไร?",
+        options: [
+            "A. ใช้ ON DELETE CASCADE กับทุกตารางทั้งหมด",
+            "B. ใช้ ON DELETE SET NULL กับทุกตารางทั้งหมด",
+            "C. ใช้ `ON DELETE RESTRICT` สำหรับ Foreign Key ที่ชี้ไปหา `member`, `room` (ในตาราง `booking`) และ `room_type` (ในตาราง `room`) ส่วนในตาราง `room_facility` ที่ชี้ไปหา `room` ให้ใช้ `ON DELETE CASCADE`",
+            "D. ใช้ ON DELETE CASCADE ในตาราง booking และใช้ ON DELETE RESTRICT ในตาราง room_facility",
+            "E. ห้ามประกาศ FOREIGN KEY ในสคริปต์ SQL"
+        ],
+        ans: 2,
+        exp: "จาก Lab 10 BR7: ห้ามลบข้อมูลแม่ที่ยังถูกอ้างอิงอยู่ = ON DELETE RESTRICT ส่วนการลบห้องแล้วให้ลบรายการอุปกรณ์ของห้องนั้นตามไปด้วยอัตโนมัติ = ON DELETE CASCADE"
+    },
+    {
+        id: 69, cat: "Design Mistakes & DDL",
+        q: "[Lab 10: CoSpace] จากข้อกำหนด BR6 ที่ต้องการบันทึกเวลาสร้าง (`created_at`) อัตโนมัติเมื่อ INSERT และปรับปรุงเวลาแก้ไขล่าสุด (`updated_at`) อัตโนมัติทุกครั้งที่มีการ UPDATE ข้อมูลในแถว ข้อใดเขียนนิยามคอลัมน์ใน MySQL 8.0 ได้ถูกต้อง?",
+        options: [
+            "A. created_at DATE, updated_at DATE ON INSERT CURRENT_DATE",
+            "B. created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
+            "C. created_at VARCHAR(50) AUTO_INCREMENT, updated_at VARCHAR(50) AUTO_UPDATE",
+            "D. created_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, updated_at TIMESTAMP DEFAULT NULL",
+            "E. created_at INT DEFAULT NOW(), updated_at INT CHECK (updated_at > created_at)"
+        ],
+        ans: 1,
+        exp: "จากเอกสาร Lab 10 หน้า 2 และสคริปต์อาจารย์ Week 10: คอลัมน์ created_at ใช้ DEFAULT CURRENT_TIMESTAMP ส่วน updated_at ใช้ DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"
+    },
+    {
+        id: 70, cat: "Design Mistakes & DDL",
+        q: "[Lab 10: Task 5.3] หลังจากเรารันคำสั่ง `UPDATE booking SET status = 'Cancelled' WHERE booking_no = 1;` ไปแล้ว 1 ครั้ง (ซึ่งทำให้ค่า status เปลี่ยนจาก 'Booked' เป็น 'Cancelled' และค่า `updated_at` เปลี่ยนเป็นเวลาใหม่) หากเราเว้นระยะเวลา 10 วินาที แล้วกดรันคำสั่ง `UPDATE booking SET status = 'Cancelled' WHERE booking_no = 1;` ซ้ำเป็นครั้งที่ 2 ค่าในคอลัมน์ `updated_at` จะเปลี่ยนแปลงหรือไม่ เพราะเหตุใด?",
+        options: [
+            "A. เปลี่ยนแปลงเป็นเวลาใหม่เสมอทุกครั้งที่มีการกดรันคำสั่ง UPDATE",
+            "B. ไม่เปลี่ยนแปลง เพราะค่าในคอลัมน์ status เป็น 'Cancelled' อยู่แล้ว (ไม่มีคอลัมน์ใดเลยในแถวนั้นที่ถูกเปลี่ยนค่าไปจากค่าปัจจุบันของมัน)",
+            "C. ค่า updated_at จะถูกรีเซ็ตกลายเป็นค่า NULL",
+            "D. ค่า created_at จะเปลี่ยนแทนค่า updated_at",
+            "E. ระบบจะเกิด Error และลบแถวนั้นทิ้งทันที"
+        ],
+        ans: 1,
+        exp: "จากเอกสาร Lab 10 หน้า 2: 'An auto-updated column remains unchanged if all other columns are set to their current values.' ดังนั้นเมื่อรัน UPDATE ซ้ำด้วยค่าเดิมโดยที่ข้อมูลจริงไม่ได้เปลี่ยน ค่า updated_at จึงไม่เปลี่ยนเวลา"
+    }
+];
+
+let userAnswers = {};
+let currentFilter = 'ALL';
+
+function renderQuiz() {
+    const list = document.getElementById('quizList');
+    list.innerHTML = '';
+
+    const filtered = currentFilter === 'ALL'
+        ? questions
+        : questions.filter(q => q.cat === currentFilter);
+
+    filtered.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'q-box';
+
+        const answered = userAnswers[item.id] !== undefined;
+        const selectedIdx = userAnswers[item.id];
+
+        let choicesHTML = '';
+        item.options.forEach((opt, idx) => {
+            let btnClass = 'choice-btn';
+            if (answered) {
+                if (idx === item.ans) btnClass += ' correct';
+                else if (idx === selectedIdx && selectedIdx !== item.ans) btnClass += ' wrong';
+            }
+            choicesHTML += `
+                <button class="${btnClass}" ${answered ? 'disabled' : ''} onclick="selectOption(${item.id}, ${idx})">
+                    ${opt}
+                </button>
+            `;
+        });
+
+        card.innerHTML = `
+            <div class="q-head">
+                <span>ข้อที่ ${item.id} / 70</span>
+                <span>หมวด: ${item.cat}</span>
+            </div>
+            <div class="q-text">${item.q.replace(/\n/g, '<br>')}</div>
+            <div class="choices">${choicesHTML}</div>
+            <div class="explain ${answered ? 'visible' : ''}">
+                <strong>${selectedIdx === item.ans ? '✅ ถูกต้อง!' : '❌ คำตอบที่ถูกคือข้อ ' + ['A','B','C','D','E'][item.ans]}</strong><br>
+                ${item.exp}
+            </div>
+        `;
+        list.appendChild(card);
+    });
+
+    updateScoreBoard();
+}
+
+function selectOption(qId, optIdx) {
+    if (userAnswers[qId] !== undefined) return;
+    userAnswers[qId] = optIdx;
+    renderQuiz();
+}
+
+function updateScoreBoard() {
+    const totalAnswered = Object.keys(userAnswers).length;
+    let correctCount = 0;
+    for (const [qId, ansIdx] of Object.entries(userAnswers)) {
+        const qObj = questions.find(q => q.id === parseInt(qId));
+        if (qObj && qObj.ans === ansIdx) correctCount++;
+    }
+    const realExamScore = (correctCount * 0.5).toFixed(1);
+    document.getElementById('scoreDisplay').textContent =
+        `คะแนน: ${correctCount} / 70 (${realExamScore} / 35 คะแนนจริง) | ตอบแล้ว ${totalAnswered} ข้อ`;
+}
+
+function filterQuestions(cat, btn) {
+    currentFilter = cat;
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderQuiz();
+}
+
+function resetQuiz() {
+    if (confirm('ต้องการล้างคำตอบทั้งหมดและเริ่มทำแบบทดสอบใหม่ใช่หรือไม่?')) {
+        userAnswers = {};
+        renderQuiz();
+    }
+}
+
+function openTab(tabId, btn) {
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+    document.querySelectorAll('.nav-buttons .btn').forEach(b => {
+        if (b.id !== 'themeBtn') b.classList.remove('active');
+    });
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('themeBtn');
+    if (html.getAttribute('data-theme') === 'dark') {
+        html.setAttribute('data-theme', 'light');
+        btn.textContent = '🌙 โหมดมืด (Dark)';
+    } else {
+        html.setAttribute('data-theme', 'dark');
+        btn.textContent = '☀️ โหมดสว่าง (Light)';
+    }
+}
+
+// Initial render
+renderQuiz();
+</script>
+</body>
+</html>
